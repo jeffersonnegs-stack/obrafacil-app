@@ -2,10 +2,10 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0b1f33">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <title>ObraFácil | Área do Profissional</title>
@@ -18,37 +18,53 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);min-height:100vh;color:var(--texto);}
+
+/* ── LOGIN / CADASTRO ─────────────────────── */
 .login-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;}
 .login-card{background:var(--branco);border-radius:20px;padding:40px 32px;width:100%;max-width:420px;box-shadow:0 4px 32px rgba(0,0,0,.10);}
 .logo{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--azul);text-align:center;}
 .logo-sub{font-size:11px;color:var(--laranja);text-align:center;letter-spacing:2.5px;text-transform:uppercase;margin:4px 0 24px;}
+
+/* Abas login/cadastro */
 .auth-tabs{display:flex;border:1.5px solid var(--borda);border-radius:var(--radius);overflow:hidden;margin-bottom:24px;}
 .auth-tab{flex:1;padding:10px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--muted);transition:all .15s;}
 .auth-tab.on{background:var(--azul);color:#fff;}
+
 .login-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block;}
 .login-input{width:100%;padding:13px 16px;border:1.5px solid var(--borda);border-radius:var(--radius);font-size:15px;font-family:'DM Sans',sans-serif;color:var(--texto);background:var(--bg);transition:border-color .2s;margin-bottom:12px;}
 .login-input:focus{outline:none;border-color:var(--laranja);}
+.login-input.erro-campo{border-color:var(--vermelho);}
+
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 @media(max-width:480px){.form-row{grid-template-columns:1fr;}}
+
 .input-wrap{position:relative;margin-bottom:12px;}
 .input-wrap .login-input{margin-bottom:0;padding-right:48px;}
 .toggle-senha{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted);}
+
 .select-input{width:100%;padding:13px 16px;border:1.5px solid var(--borda);border-radius:var(--radius);font-size:15px;font-family:'DM Sans',sans-serif;color:var(--texto);background:var(--bg);appearance:none;margin-bottom:12px;cursor:pointer;}
 .select-input:focus{outline:none;border-color:var(--laranja);}
+
 .btn-laranja{width:100%;padding:14px;background:var(--laranja);color:#fff;border:none;border-radius:var(--radius);font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;display:flex;justify-content:center;align-items:center;gap:8px;margin-top:8px;}
 .btn-laranja:hover{opacity:.88;}
 .btn-laranja:disabled{opacity:.5;cursor:not-allowed;}
+
 .login-erro{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;font-size:13px;color:var(--vermelho);font-weight:600;text-align:center;margin-top:12px;display:none;}
 .login-ok{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;font-size:13px;color:var(--verde);font-weight:600;text-align:center;margin-top:12px;display:none;}
+
+/* Rodapé com WhatsApp visível */
 .login-rodape{font-size:12px;color:var(--muted);text-align:center;margin-top:18px;line-height:1.8;padding-top:14px;border-top:1px solid var(--borda);}
 .wpp-link{display:inline-flex;align-items:center;gap:6px;background:#25D366;color:#fff;padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;text-decoration:none;margin-top:8px;}
+.wpp-link:hover{opacity:.88;}
+
+/* Aviso aprovação pendente */
 .pendente-card{background:var(--branco);border-radius:20px;padding:40px 32px;width:100%;max-width:420px;box-shadow:0 4px 32px rgba(0,0,0,.10);text-align:center;display:none;}
 .pendente-icon{font-size:56px;margin-bottom:16px;}
 .pendente-titulo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--azul);margin-bottom:10px;}
-.forca-bar{height:4px;border-radius:999px;margin:4px 0 8px;background:var(--borda);overflow:hidden;}
-.forca-fill{height:100%;border-radius:999px;transition:width .3s,background .3s;}
-.forca-texto{font-size:11px;color:var(--muted);margin-bottom:10px;}
-/* PAINEL */
+.pendente-desc{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:20px;}
+.pendente-prazo{background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:12px 16px;font-size:13px;color:#92400e;margin-bottom:20px;line-height:1.6;}
+
+/* ── PAINEL ───────────────────────────────── */
 .painel{display:none;min-height:100vh;flex-direction:column;}
 .painel.show{display:flex;}
 .header{background:var(--azul);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
@@ -58,16 +74,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);min-height:100vh;colo
 .saldo-num{font-size:16px;font-weight:700;color:var(--laranja);}
 .saldo-zero .saldo-num{color:#ef4444;}
 .btn-sair{background:none;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.7);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;}
+.btn-sair:hover{background:rgba(255,255,255,.1);}
 .boas-vindas{background:var(--azul);padding:0 20px 20px;border-bottom:3px solid var(--laranja);}
 .bv-nome{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:#fff;}
 .bv-prof{font-size:13px;color:rgba(255,255,255,.6);margin-top:2px;}
+
 .aviso-sem-credito{background:#fef2f2;border:2px solid var(--vermelho);border-radius:var(--radius);padding:20px;margin:16px;text-align:center;}
 .aviso-sem-credito-titulo{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--vermelho);margin-bottom:8px;}
 .aviso-sem-credito-desc{font-size:13px;color:var(--texto);line-height:1.6;margin-bottom:14px;}
+
 .tabs{display:flex;background:var(--branco);border-bottom:1px solid var(--borda);overflow-x:auto;}
 .tab-btn{flex:1;min-width:100px;padding:14px 12px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--muted);border-bottom:2.5px solid transparent;transition:all .15s;white-space:nowrap;}
 .tab-btn.on{color:var(--laranja);border-bottom-color:var(--laranja);}
+
 .conteudo{flex:1;padding:16px;max-width:700px;margin:0 auto;width:100%;}
+
 .lead-card{background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:16px;margin-bottom:12px;transition:box-shadow .15s;}
 .lead-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.08);}
 .lead-card.desbloqueado{border-color:var(--verde);border-width:1.5px;}
@@ -81,6 +102,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);min-height:100vh;colo
 .badge-urgente{background:#fef3c7;color:#92400e;}
 .lead-info{font-size:13px;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;}
 .lead-obs{font-size:13px;color:var(--texto);background:var(--bg);border-radius:8px;padding:10px 12px;margin-bottom:12px;line-height:1.6;}
+.lead-contato{margin-bottom:12px;}
 .contato-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;margin-bottom:6px;}
 .contato-label{font-size:11px;font-weight:600;color:var(--verde);text-transform:uppercase;min-width:70px;}
 .contato-val{font-size:14px;font-weight:600;color:var(--azul);}
@@ -94,10 +116,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);min-height:100vh;colo
 .btn-desbloquear:hover{opacity:.88;}
 .btn-desbloquear:disabled{opacity:.5;cursor:not-allowed;}
 .btn-whatsapp{padding:10px 20px;background:var(--verde);color:#fff;border:none;border-radius:var(--radius);font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+
 .vazio{text-align:center;padding:60px 20px;}
 .vazio-icon{font-size:48px;margin-bottom:12px;}
 .vazio-titulo{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--azul);margin-bottom:8px;}
 .vazio-desc{font-size:14px;color:var(--muted);line-height:1.7;}
+
 .pacotes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0;}
 .pacote{background:var(--branco);border:1.5px solid var(--borda);border-radius:var(--radius);padding:20px 16px;text-align:center;cursor:pointer;transition:all .15s;}
 .pacote:hover{border-color:var(--laranja);}
@@ -111,15 +135,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);min-height:100vh;colo
 .pix-titulo{font-size:14px;font-weight:700;color:var(--verde);margin-bottom:6px;}
 .pix-num{font-size:18px;font-weight:700;color:var(--azul);margin:4px 0;}
 .pix-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+
 .hist-item{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:14px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
 .hist-info strong{font-size:14px;font-weight:500;color:var(--azul);display:block;}
 .hist-info span{font-size:12px;color:var(--muted);}
 .hist-data{font-size:11px;color:var(--muted);text-align:right;}
+
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:12px 20px;border-radius:var(--radius);color:#fff;font-weight:600;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;max-width:90vw;text-align:center;}
 .toast.show{opacity:1;}
 .toast.sucesso{background:var(--verde);}
 .toast.erro{background:var(--vermelho);}
 .toast.info{background:var(--azul);}
+
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;padding:20px;align-items:center;justify-content:center;}
 .overlay.show{display:flex;}
 .modal{background:var(--branco);border-radius:20px;padding:28px;width:100%;max-width:380px;text-align:center;animation:pop .25s ease;}
@@ -128,148 +155,289 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);min-height:100vh;colo
 .modal-titulo{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--azul);margin-bottom:8px;}
 .modal-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;}
 .modal-btns{display:flex;flex-direction:column;gap:8px;}
+
 .spinner{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* Força senha */
+.forca-bar{height:4px;border-radius:999px;margin:4px 0 8px;background:var(--borda);overflow:hidden;}
+.forca-fill{height:100%;border-radius:999px;transition:width .3s,background .3s;}
+.forca-texto{font-size:11px;color:var(--muted);margin-bottom:10px;}
+
 @media(max-width:480px){.login-card{padding:28px 20px;}.pacotes-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<!-- TELA DE LOGIN/CADASTRO -->
+<!-- ── ÁREA DE LOGIN/CADASTRO ──────────────────────────────── -->
 <div class="login-wrap" id="tela-login">
+
+  <!-- Card principal login/cadastro -->
   <div class="login-card" id="card-auth">
-    <div class="logo">ObraFácil</div>
-    <div class="logo-sub">Área do Profissional</div>
+    <div class="logo">ObraFacil</div>
+    <div class="logo-sub">Area do Profissional</div>
+
+    <!-- Abas -->
     <div class="auth-tabs">
       <button class="auth-tab on" id="tab-login-btn" onclick="mostrarAba('login')">Entrar</button>
       <button class="auth-tab" id="tab-cad-btn" onclick="mostrarAba('cadastro')">Quero me cadastrar</button>
     </div>
 
-    <!-- FORMULÁRIO LOGIN -->
+    <!-- ── FORMULÁRIO LOGIN ── -->
     <div id="form-login">
-      <label class="login-label">Número de WhatsApp</label>
-      <input class="login-input" type="tel" id="inp-tel" placeholder="(15) 99999-9999" oninput="mascaraTel(this)" onkeydown="if(event.key==='Enter') document.getElementById('inp-senha').focus()">
+      <label class="login-label">Numero de WhatsApp</label>
+      <input class="login-input" type="tel" id="inp-tel"
+        placeholder="(15) 99999-9999"
+        oninput="mascaraTel(this)"
+        onkeydown="if(event.key==='Enter') document.getElementById('inp-senha').focus()">
+
       <label class="login-label">Senha</label>
       <div class="input-wrap">
-        <input class="login-input" type="password" id="inp-senha" placeholder="Digite sua senha" onkeydown="if(event.key==='Enter') entrar()">
+        <input class="login-input" type="password" id="inp-senha"
+          placeholder="Digite sua senha"
+          onkeydown="if(event.key==='Enter') entrar()">
         <button class="toggle-senha" onclick="toggleSenha('inp-senha','btn-eye')" type="button" id="btn-eye">👁️</button>
       </div>
+
       <button class="btn-laranja" id="btn-entrar" onclick="entrar()">Entrar</button>
       <div class="login-erro" id="login-erro"></div>
     </div>
 
-    <!-- FORMULÁRIO CADASTRO -->
+    <!-- ── FORMULÁRIO CADASTRO ── -->
     <div id="form-cadastro" style="display:none">
       <div class="form-row">
-        <div><label class="login-label">Nome completo *</label><input class="login-input" type="text" id="cad-nome" placeholder="João da Silva" style="margin-bottom:0"></div>
-        <div><label class="login-label">WhatsApp *</label><input class="login-input" type="tel" id="cad-tel" placeholder="(15) 99999-9999" oninput="mascaraTel(this)" style="margin-bottom:0"></div>
+        <div>
+          <label class="login-label">Nome completo *</label>
+          <input class="login-input" type="text" id="cad-nome" placeholder="Joao da Silva" style="margin-bottom:0">
+        </div>
+        <div>
+          <label class="login-label">WhatsApp *</label>
+          <input class="login-input" type="tel" id="cad-tel" placeholder="(15) 99999-9999"
+            oninput="mascaraTel(this)" style="margin-bottom:0">
+        </div>
       </div>
       <div style="margin-top:10px"></div>
+
       <div class="form-row">
         <div>
-          <label class="login-label">Profissão *</label>
+          <label class="login-label">Profissao *</label>
           <select class="select-input" id="cad-prof" style="margin-bottom:0">
             <option value="">Selecione...</option>
-            <option>Pedreiro</option><option>Pintor</option><option>Eletricista</option><option>Encanador</option><option>Paisagista</option>
+            <option>Pedreiro</option>
+            <option>Pintor</option>
+            <option>Eletricista</option>
+            <option>Encanador</option>
+            <option>Paisagista</option>
           </select>
         </div>
-        <div><label class="login-label">Cidade *</label><input class="login-input" type="text" id="cad-cidade" placeholder="Itapetininga" style="margin-bottom:0"></div>
+        <div>
+          <label class="login-label">Cidade *</label>
+          <input class="login-input" type="text" id="cad-cidade" placeholder="Itapetininga" style="margin-bottom:0">
+        </div>
       </div>
       <div style="margin-top:10px"></div>
+
       <label class="login-label">Criar senha *</label>
       <div class="input-wrap">
-        <input class="login-input" type="password" id="cad-senha" placeholder="Mínimo 6 caracteres" oninput="verificarForca(this)" style="margin-bottom:0">
+        <input class="login-input" type="password" id="cad-senha"
+          placeholder="Minimo 6 caracteres"
+          oninput="verificarForca(this)"
+          style="margin-bottom:0">
         <button class="toggle-senha" onclick="toggleSenha('cad-senha','btn-eye-cad')" type="button" id="btn-eye-cad">👁️</button>
       </div>
       <div class="forca-bar"><div class="forca-fill" id="forca-fill" style="width:0%"></div></div>
       <div class="forca-texto" id="forca-texto">Digite uma senha</div>
+
       <label class="login-label">Confirmar senha *</label>
-      <input class="login-input" type="password" id="cad-senha2" placeholder="Repita a senha" onkeydown="if(event.key==='Enter') cadastrar()">
-      <label class="login-label" style="margin-top:4px">Observações (opcional)</label>
-      <input class="login-input" type="text" id="cad-obs" placeholder="Anos de experiência, especialidade...">
+      <input class="login-input" type="password" id="cad-senha2"
+        placeholder="Repita a senha"
+        onkeydown="if(event.key==='Enter') cadastrar()">
+
+      <label class="login-label" style="margin-top:4px">Observacoes (opcional)</label>
+      <input class="login-input" type="text" id="cad-obs"
+        placeholder="Anos de experiencia, especialidade...">
+
       <button class="btn-laranja" id="btn-cadastrar" onclick="cadastrar()">Enviar cadastro</button>
       <div class="login-erro" id="cad-erro"></div>
       <div class="login-ok" id="cad-ok"></div>
     </div>
 
+    <!-- Rodapé sempre visível com WhatsApp -->
     <div class="login-rodape">
-      Dúvidas? Fale diretamente conosco:<br>
-      <a class="wpp-link" href="https://wa.me/5511971776347?text=Ola!+Quero+me+cadastrar+no+ObraFacil" target="_blank">📲 WhatsApp ObraFácil</a>
+      Duvidas? Fale diretamente conosco:<br>
+      <a class="wpp-link" href="https://wa.me/5511971776347?text=Ola!+Quero+me+cadastrar+no+ObraFacil" target="_blank">
+        📲 WhatsApp ObraFacil
+      </a>
     </div>
   </div>
 
-  <!-- CARD PÓS-CADASTRO -->
+  <!-- Card aprovação pendente -->
   <div class="pendente-card" id="card-pendente">
+
+    <!-- Ícone dinâmico: verde quando aprovado, laranja quando pendente -->
     <div class="pendente-icon" id="pendente-icon">✅</div>
     <div class="pendente-titulo" id="pendente-titulo">Cadastro Ativo!</div>
-    <div id="pendente-msg-dinamica" style="background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);border:1.5px solid #86efac;border-radius:14px;padding:18px 20px;margin-bottom:18px;font-size:13px;color:#14532d;line-height:1.85;text-align:left;"></div>
-    <div id="pendente-acesso" style="background:#fff7ed;border:1.5px solid #fed7aa;border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:13px;color:#92400e;line-height:1.8;text-align:left;display:none;"></div>
-    <a class="wpp-link" id="wpp-pendente" href="#" target="_blank" style="background:#16a34a;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;color:#fff;text-decoration:none;font-family:'Syne',sans-serif;margin-bottom:10px;">📲 Falar com a equipe ObraFácil</a>
-    <button onclick="mostrarAba('login')" style="width:100%;padding:12px;background:none;border:1.5px solid var(--borda);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;color:var(--muted);">Fazer login com minha senha</button>
+
+    <!-- Mensagem dinâmica — preenchida via JS com nome + profissão + senha -->
+    <div id="pendente-msg-dinamica" style="
+      background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);
+      border:1.5px solid #86efac;
+      border-radius:14px;
+      padding:18px 20px;
+      margin-bottom:18px;
+      font-size:13px;
+      color:#14532d;
+      line-height:1.85;
+      text-align:left;
+    ">
+      <!-- Preenchido dinamicamente pelo cadastrar() -->
+    </div>
+
+    <!-- Box de acesso rápido com senha -->
+    <div id="pendente-acesso" style="
+      background:#fff7ed;
+      border:1.5px solid #fed7aa;
+      border-radius:12px;
+      padding:14px 18px;
+      margin-bottom:18px;
+      font-size:13px;
+      color:#92400e;
+      line-height:1.8;
+      text-align:left;
+      display:none;
+    ">
+      <!-- Preenchido com dados de acesso -->
+    </div>
+
+    <a class="wpp-link" id="wpp-pendente" href="#" target="_blank"
+       style="background:#16a34a;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;color:#fff;text-decoration:none;font-family:'Syne',sans-serif;margin-bottom:10px;">
+      📲 Falar com a equipe ObraFacil
+    </a>
+
+    <a id="btn-ir-painel" href="#" target="_blank"
+       style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:var(--laranja);color:#fff;border-radius:12px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;text-decoration:none;margin-bottom:10px;">
+      🚀 Entrar no Painel Agora
+    </a>
+
+    <button onclick="mostrarAba('login')"
+      style="width:100%;padding:12px;background:none;border:1.5px solid var(--borda);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;color:var(--muted);">
+      Fazer login com minha senha
+    </button>
   </div>
+
 </div>
 
-<!-- PAINEL PRINCIPAL -->
+<!-- ── PAINEL PRINCIPAL ───────────────────────────────────── -->
 <div class="painel" id="painel">
   <div class="header">
-    <div class="header-logo">ObraFácil</div>
+    <div class="header-logo">ObraFacil</div>
     <div class="header-info">
-      <div class="saldo-pill" id="saldo-pill"><span class="saldo-num" id="hd-creditos">0</span> créditos</div>
+      <div class="saldo-pill" id="saldo-pill">
+        <span class="saldo-num" id="hd-creditos">0</span> creditos
+      </div>
       <button class="btn-sair" onclick="sair()">Sair</button>
     </div>
   </div>
   <div class="boas-vindas">
-    <div class="bv-nome" id="bv-nome">Olá!</div>
+    <div class="bv-nome" id="bv-nome">Ola!</div>
     <div class="bv-prof" id="bv-prof"></div>
   </div>
   <div class="tabs">
-    <button class="tab-btn on" onclick="irTab(0)">Leads disponíveis</button>
-    <button class="tab-btn" onclick="irTab(1)">Comprar créditos</button>
-    <button class="tab-btn" onclick="irTab(2)">Histórico</button>
+    <button class="tab-btn on" onclick="irTab(0)">Leads disponiveis</button>
+    <button class="tab-btn"   onclick="irTab(1)">Comprar creditos</button>
+    <button class="tab-btn"   onclick="irTab(2)">Historico</button>
   </div>
   <div class="conteudo">
+
+    <!-- Tab Leads -->
     <div id="tab-leads">
       <div id="aviso-sem-credito" class="aviso-sem-credito" style="display:none">
-        <div class="aviso-sem-credito-titulo">Seus créditos acabaram!</div>
-        <div class="aviso-sem-credito-desc">Você precisa de créditos para visualizar e desbloquear novos leads.<br>Compre um pacote e continue recebendo clientes.</div>
-        <button class="btn-laranja" style="margin:0 auto;max-width:280px" onclick="irTab(1)">Comprar créditos agora</button>
+        <div class="aviso-sem-credito-titulo">Seus creditos acabaram!</div>
+        <div class="aviso-sem-credito-desc">
+          Voce precisa de creditos para visualizar e desbloquear novos leads.<br>
+          Compre um pacote e continue recebendo clientes.
+        </div>
+        <button class="btn-laranja" style="margin:0 auto;max-width:280px" onclick="irTab(1)">
+          Comprar creditos agora
+        </button>
       </div>
-      <div id="lista-leads"><div class="vazio"><div class="vazio-titulo">Carregando leads...</div></div></div>
+      <div id="lista-leads">
+        <div class="vazio"><div class="vazio-titulo">Carregando leads...</div></div>
+      </div>
     </div>
+
+    <!-- Tab Comprar -->
     <div id="tab-comprar" style="display:none">
       <div style="margin-bottom:16px;">
-        <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--azul);margin-bottom:4px">Comprar créditos</div>
-        <div style="font-size:13px;color:var(--muted);line-height:1.6">Cada crédito desbloqueia o contato completo de 1 cliente.</div>
+        <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--azul);margin-bottom:4px">Comprar creditos</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6">Cada credito desbloqueia o contato completo de 1 cliente. Os creditos nao expiram em 60 dias.</div>
       </div>
       <div class="pacotes-grid">
-        <div class="pacote" onclick="selecionarPacote(5,75,this)"><div class="pacote-tag" style="color:var(--muted)">Iniciante</div><div class="pacote-cred">5</div><div class="pacote-sub">créditos</div><div class="pacote-preco">R$ 75</div><div class="pacote-unitario">R$ 15,00 por contato</div></div>
-        <div class="pacote popular" onclick="selecionarPacote(12,150,this)"><div class="pacote-tag" style="color:var(--laranja)">Mais popular</div><div class="pacote-cred">12</div><div class="pacote-sub">créditos</div><div class="pacote-preco">R$ 150</div><div class="pacote-unitario">R$ 12,50 por contato</div></div>
-        <div class="pacote" onclick="selecionarPacote(25,250,this)"><div class="pacote-tag" style="color:var(--verde)">Profissional</div><div class="pacote-cred">25</div><div class="pacote-sub">créditos</div><div class="pacote-preco">R$ 250</div><div class="pacote-unitario">R$ 10,00 por contato</div></div>
+        <div class="pacote" onclick="selecionarPacote(5,75,this)">
+          <div class="pacote-tag" style="color:var(--muted)">Iniciante</div>
+          <div class="pacote-cred">5</div>
+          <div class="pacote-sub">creditos</div>
+          <div class="pacote-preco">R$ 75</div>
+          <div class="pacote-unitario">R$ 15,00 por contato</div>
+        </div>
+        <div class="pacote popular" onclick="selecionarPacote(12,150,this)">
+          <div class="pacote-tag" style="color:var(--laranja)">Mais popular</div>
+          <div class="pacote-cred">12</div>
+          <div class="pacote-sub">creditos</div>
+          <div class="pacote-preco">R$ 150</div>
+          <div class="pacote-unitario">R$ 12,50 por contato</div>
+        </div>
+        <div class="pacote" onclick="selecionarPacote(25,250,this)">
+          <div class="pacote-tag" style="color:var(--verde)">Profissional</div>
+          <div class="pacote-cred">25</div>
+          <div class="pacote-sub">creditos</div>
+          <div class="pacote-preco">R$ 250</div>
+          <div class="pacote-unitario">R$ 10,00 por contato</div>
+        </div>
       </div>
       <div class="pix-instrucao" id="pix-instrucao" style="display:none">
-        <div class="pix-titulo">Pacote selecionado — pague via Pix</div>
+        <div class="pix-titulo">Pacote selecionado - pague via Pix</div>
         <div id="pix-detalhe" style="font-size:13px;color:var(--muted);margin-bottom:10px;"></div>
         <div class="pix-num">Chave Pix: 11971776347</div>
-        <div class="pix-desc">Envie o comprovante para o WhatsApp do ObraFácil.<br>Seus créditos serão adicionados em até 30 minutos.</div>
-        <div style="margin-top:14px;"><a id="pix-wpp" href="#" target="_blank" class="btn-whatsapp">Enviar comprovante no WhatsApp</a></div>
+        <div class="pix-desc">
+          Envie o comprovante para o WhatsApp do ObraFacil.<br>
+          Seus creditos serao adicionados em ate 30 minutos durante horario comercial.
+        </div>
+        <div style="margin-top:14px;">
+          <a id="pix-wpp" href="#" target="_blank" class="btn-whatsapp">
+            Enviar comprovante no WhatsApp
+          </a>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding:14px;background:var(--bg);border-radius:var(--radius);font-size:12px;color:var(--muted);line-height:1.7">
+        <strong style="color:var(--texto)">Por que vale a pena?</strong><br>
+        Uma reforma tipica vale R$ 2.000 a R$ 8.000. Um credito custa R$ 10 a R$ 15. Voce investe menos de 1% do valor da obra para receber o contato do cliente.
       </div>
     </div>
+
+    <!-- Tab Histórico -->
     <div id="tab-historico" style="display:none">
       <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--azul);margin-bottom:16px">Leads desbloqueados</div>
-      <div id="lista-historico"><div class="vazio"><div class="vazio-titulo">Nenhum lead desbloqueado ainda</div></div></div>
+      <div id="lista-historico">
+        <div class="vazio">
+          <div class="vazio-titulo">Nenhum lead desbloqueado ainda</div>
+          <div class="vazio-desc">Quando voce desbloquear um lead, ele aparecera aqui.</div>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
 <!-- Modal sem créditos -->
 <div class="overlay" id="modal-sem-cred">
   <div class="modal">
-    <div class="modal-icon">💳</div>
-    <div class="modal-titulo">Créditos insuficientes</div>
-    <div class="modal-desc">Você não tem créditos para desbloquear este lead. Compre um pacote e acesse os dados do cliente agora.</div>
+    <div class="modal-icon">!</div>
+    <div class="modal-titulo">Creditos insuficientes</div>
+    <div class="modal-desc">Voce nao tem creditos para desbloquear este lead. Compre um pacote e acesse os dados do cliente agora.</div>
     <div class="modal-btns">
-      <button class="btn-laranja" onclick="irTab(1);fecharModal()" style="margin-top:0">Ver pacotes de crédito</button>
-      <button onclick="fecharModal()" style="background:none;border:1px solid var(--borda);border-radius:var(--radius);padding:12px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;color:var(--muted)">Agora não</button>
+      <button class="btn-laranja" onclick="irTab(1);fecharModal()" style="margin-top:0">Ver pacotes de credito</button>
+      <button onclick="fecharModal()" style="background:none;border:1px solid var(--borda);border-radius:var(--radius);padding:12px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;color:var(--muted)">Agora nao</button>
     </div>
   </div>
 </div>
@@ -277,15 +445,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);min-height:100vh;colo
 <div id="toast" class="toast"></div>
 
 <script>
-// ════════════════════════════════════════════════════════════
-// CONFIGURAÇÃO — cole aqui a URL do seu Apps Script
-// ════════════════════════════════════════════════════════════
-const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwvUvluA2sDbwXd-Dbik3j2TFGU0kbxPMxXfLJ0XS6du1gO3wQCkg8xZODMf9aZ3FF5HA/exec';
-const WHATSAPP_ADMIN = '5511971776347';
-const SESSION_KEY = 'obrafacil_sessao';
 
-// ── Backend ──────────────────────────────────────────────────
-async function chamarBackend(acao, dados = {}) {
+// ── BACKEND CONFIG ────────────────────────────────────────────
+const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwvUvluA2sDbwXd-Dbik3j2TFGU0kbxPMxXfLJ0XS6du1gO3wQCkg8xZODMf9aZ3FF5HA/exec';
+async function chamarBackend(acao, dados) {
+  dados = dados || {};
   const resp = await fetch(BACKEND_URL, {
     method: 'POST',
     body: JSON.stringify({ acao, dados }),
@@ -293,164 +457,250 @@ async function chamarBackend(acao, dados = {}) {
   });
   return resp.json();
 }
+// ── CONFIGURACOES ────────────────────────────────────────────
+var WHATSAPP_ADMIN = '5511971776347';
+var PIX_CHAVE = '11971776347';
+var SESSION_KEY = 'obrafacil_sessao';
 
-// ── Sessão ───────────────────────────────────────────────────
-let profissional = null;
-let timersDeadline = {};
+// ── ESTADO ───────────────────────────────────────────────────
+var profissional = null;
+var tabAtual = 0;
+var timersDeadline = {};
 
-function salvarSessao(p) { try { localStorage.setItem(SESSION_KEY, JSON.stringify(p)); } catch(e){} }
-function carregarSessao() { try { const d = localStorage.getItem(SESSION_KEY); return d ? JSON.parse(d) : null; } catch(e){ return null; } }
+// ── SESSAO ───────────────────────────────────────────────────
+function salvarSessao(prof) { try { localStorage.setItem(SESSION_KEY, JSON.stringify(prof)); } catch(e){} }
+function carregarSessao() { try { var d = localStorage.getItem(SESSION_KEY); return d ? JSON.parse(d) : null; } catch(e){ return null; } }
 function limparSessao() { try { localStorage.removeItem(SESSION_KEY); } catch(e){} }
 
-// ── Toast ────────────────────────────────────────────────────
-function toast(msg, tipo = 'info') {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.className = 'toast show ' + tipo;
+// ── UTILITÁRIOS ──────────────────────────────────────────────
+function toast(msg, tipo) {
+  if (!tipo) tipo = 'info';
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + tipo;
   clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove('show'), 3800);
+  t._timer = setTimeout(function(){ t.classList.remove('show'); }, 3800);
 }
 
 function mascaraTel(input) {
-  let v = input.value.replace(/\D/g,'').substring(0,11);
-  if (v.length > 10) v = v.replace(/^(\d{2})(\d{5})(\d{4})$/,'($1) $2-$3');
-  else if (v.length > 6) v = v.replace(/^(\d{2})(\d{4})(\d*)$/,'($1) $2-$3');
-  else if (v.length > 2) v = v.replace(/^(\d{2})(\d*)$/,'($1) $2');
+  var v = input.value.replace(/\D/g,'').substring(0,11);
+  if (v.length > 10) v = v.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+  else if (v.length > 6) v = v.replace(/^(\d{2})(\d{4})(\d*)$/, '($1) $2-$3');
+  else if (v.length > 2) v = v.replace(/^(\d{2})(\d*)$/, '($1) $2');
   input.value = v;
 }
 
-function toggleSenha(id, btnId) {
-  const inp = document.getElementById(id);
+function toggleSenha(idInput, idBtn) {
+  var inp = document.getElementById(idInput);
+  var btn = document.getElementById(idBtn);
   inp.type = inp.type === 'password' ? 'text' : 'password';
-  document.getElementById(btnId).textContent = inp.type === 'password' ? '👁️' : '🙈';
-}
-
-function verificarForca(input) {
-  const v = input.value;
-  let score = 0;
-  if (v.length >= 6) score++;
-  if (v.length >= 10) score++;
-  if (/[A-Z]/.test(v)) score++;
-  if (/[0-9]/.test(v)) score++;
-  if (/[^A-Za-z0-9]/.test(v)) score++;
-  const fill = document.getElementById('forca-fill');
-  const txt = document.getElementById('forca-texto');
-  const pct = (score / 5) * 100;
-  const cor = score <= 1 ? '#dc2626' : score <= 3 ? '#d97706' : '#16a34a';
-  const label = score <= 1 ? 'Senha fraca' : score <= 3 ? 'Senha média' : 'Senha forte';
-  fill.style.width = pct + '%'; fill.style.background = cor;
-  txt.textContent = v ? label : 'Digite uma senha'; txt.style.color = v ? cor : 'var(--muted)';
+  btn.textContent = inp.type === 'password' ? '👁️' : '🙈';
 }
 
 function fecharModal() { document.getElementById('modal-sem-cred').classList.remove('show'); }
 
-// ── Abas login/cadastro ──────────────────────────────────────
+// ── FORÇA DA SENHA ───────────────────────────────────────────
+function verificarForca(input) {
+  var v = input.value;
+  var score = 0;
+  if (v.length >= 6)  score++;
+  if (v.length >= 10) score++;
+  if (/[A-Z]/.test(v)) score++;
+  if (/[0-9]/.test(v)) score++;
+  if (/[^A-Za-z0-9]/.test(v)) score++;
+
+  var fill = document.getElementById('forca-fill');
+  var txt  = document.getElementById('forca-texto');
+  var pct  = (score / 5) * 100;
+  var cor  = score <= 1 ? '#dc2626' : score <= 3 ? '#d97706' : '#16a34a';
+  var label = score <= 1 ? 'Senha fraca' : score <= 3 ? 'Senha media' : 'Senha forte';
+  fill.style.width = pct + '%';
+  fill.style.background = cor;
+  txt.textContent = v ? label : 'Digite uma senha';
+  txt.style.color = v ? cor : 'var(--muted)';
+}
+
+// ── ABAS LOGIN / CADASTRO ────────────────────────────────────
 function mostrarAba(aba) {
-  const eLogin = aba === 'login';
-  document.getElementById('form-login').style.display = eLogin ? 'block' : 'none';
+  var eLogin = aba === 'login';
+  document.getElementById('form-login').style.display   = eLogin ? 'block' : 'none';
   document.getElementById('form-cadastro').style.display = eLogin ? 'none' : 'block';
   document.getElementById('tab-login-btn').classList.toggle('on', eLogin);
   document.getElementById('tab-cad-btn').classList.toggle('on', !eLogin);
-  document.getElementById('card-auth').style.display = 'block';
+  document.getElementById('card-auth').style.display    = 'block';
   document.getElementById('card-pendente').style.display = 'none';
+  // Limpa erros
   document.getElementById('login-erro').style.display = 'none';
-  document.getElementById('cad-erro').style.display = 'none';
+  document.getElementById('cad-erro').style.display   = 'none';
+  document.getElementById('cad-ok').style.display     = 'none';
 }
 
-// ── Login ────────────────────────────────────────────────────
-async function entrar() {
-  const tel = document.getElementById('inp-tel').value;
-  const senha = document.getElementById('inp-senha').value;
-  const erroDiv = document.getElementById('login-erro');
+// ── LOGIN ────────────────────────────────────────────────────
+function entrar() {
+  var tel   = document.getElementById('inp-tel').value;
+  var senha = document.getElementById('inp-senha').value;
+  var erroDiv = document.getElementById('login-erro');
   erroDiv.style.display = 'none';
-  if (tel.replace(/\D/g,'').length < 10) { erroDiv.textContent = 'Digite um número de WhatsApp válido.'; erroDiv.style.display = 'block'; return; }
-  if (!senha) { erroDiv.textContent = 'Digite sua senha.'; erroDiv.style.display = 'block'; return; }
-  const btn = document.getElementById('btn-entrar');
-  btn.disabled = true; btn.innerHTML = '<div class="spinner"></div>';
-  try {
-    const r = await chamarBackend('loginProfissional', { telefone: tel, senha });
-    btn.disabled = false; btn.innerHTML = 'Entrar';
-    if (!r.sucesso) {
-      if (r.naoEncontrado) {
-        erroDiv.innerHTML = r.mensagem + '<br><br><button onclick="mostrarAba(\'cadastro\')" style="background:var(--laranja);color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:13px;font-weight:600;margin-top:4px">Fazer cadastro agora</button>';
-      } else { erroDiv.textContent = r.mensagem; }
-      erroDiv.style.display = 'block'; return;
-    }
-    profissional = r.profissional;
-    salvarSessao(profissional);
-    iniciarPainel();
-  } catch(e) {
-    btn.disabled = false; btn.innerHTML = 'Entrar';
-    erroDiv.textContent = 'Erro de comunicação. Tente novamente.'; erroDiv.style.display = 'block';
+
+  if (tel.replace(/\D/g,'').length < 10) {
+    erroDiv.textContent = 'Digite um numero de WhatsApp valido.';
+    erroDiv.style.display = 'block'; return;
   }
+  if (!senha) {
+    erroDiv.textContent = 'Digite sua senha.';
+    erroDiv.style.display = 'block'; return;
+  }
+
+  var btn = document.getElementById('btn-entrar');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div>';
+
+  chamarBackend('loginProfissional', { telefone: tel, senha: senha }).then(function(r) {
+      btn.disabled = false; btn.innerHTML = 'Entrar';
+      if (!r.sucesso) {
+        if (r.naoEncontrado) {
+          erroDiv.innerHTML = r.mensagem + '<br><br>'
+            + '<button onclick="mostrarAba(\'cadastro\')" style="background:var(--laranja);color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:13px;font-weight:600;margin-top:4px">Fazer cadastro agora</button>';
+        } else {
+          erroDiv.textContent = r.mensagem;
+        }
+        erroDiv.style.display = 'block'; return;
+      }
+      profissional = r.profissional;
+      salvarSessao(profissional);
+      iniciarPainel();
+    }).catch(function(e) {
+      btn.disabled = false; btn.innerHTML = 'Entrar';
+      erroDiv.textContent = 'Erro de comunicacao. Tente novamente.';
+      erroDiv.style.display = 'block';
+    });
 }
 
-// ── Cadastro ─────────────────────────────────────────────────
-async function cadastrar() {
-  const nome = document.getElementById('cad-nome').value.trim();
-  const tel = document.getElementById('cad-tel').value.trim();
-  const prof = document.getElementById('cad-prof').value;
-  const cidade = document.getElementById('cad-cidade').value.trim();
-  const senha = document.getElementById('cad-senha').value;
-  const senha2 = document.getElementById('cad-senha2').value;
-  const obs = document.getElementById('cad-obs').value.trim();
-  const erroDiv = document.getElementById('cad-erro');
+// ── CADASTRO ─────────────────────────────────────────────────
+function cadastrar() {
+  var nome   = document.getElementById('cad-nome').value.trim();
+  var tel    = document.getElementById('cad-tel').value.trim();
+  var prof   = document.getElementById('cad-prof').value;
+  var cidade = document.getElementById('cad-cidade').value.trim();
+  var senha  = document.getElementById('cad-senha').value;
+  var senha2 = document.getElementById('cad-senha2').value;
+  var obs    = document.getElementById('cad-obs').value.trim();
+  var erroDiv = document.getElementById('cad-erro');
   erroDiv.style.display = 'none';
-  if (!nome || nome.length < 3) { erroDiv.textContent = 'Digite seu nome completo (mínimo 3 caracteres).'; erroDiv.style.display = 'block'; return; }
-  if (tel.replace(/\D/g,'').length < 10) { erroDiv.textContent = 'Digite um WhatsApp válido com DDD.'; erroDiv.style.display = 'block'; return; }
-  if (!prof) { erroDiv.textContent = 'Selecione sua profissão.'; erroDiv.style.display = 'block'; return; }
-  if (!cidade) { erroDiv.textContent = 'Digite sua cidade.'; erroDiv.style.display = 'block'; return; }
-  if (senha.length < 6) { erroDiv.textContent = 'A senha deve ter pelo menos 6 caracteres.'; erroDiv.style.display = 'block'; return; }
-  if (senha !== senha2) { erroDiv.textContent = 'As senhas não coincidem.'; erroDiv.style.display = 'block'; return; }
-  const btn = document.getElementById('btn-cadastrar');
-  btn.disabled = true; btn.innerHTML = '<div class="spinner"></div>';
-  try {
-    const r = await chamarBackend('solicitarCadastro', { nome, telefone: tel, profissao: prof, cidade, senha, observacoes: obs });
-    btn.disabled = false; btn.innerHTML = 'Enviar cadastro';
-    if (!r.sucesso) { erroDiv.textContent = r.mensagem; erroDiv.style.display = 'block'; return; }
-    const primeiroNome = nome.split(' ')[0] || nome;
-    const senhaRecebida = r.senha || '';
-    document.getElementById('pendente-icon').textContent = '✅';
-    document.getElementById('pendente-titulo').textContent = 'Cadastro Ativo!';
-    document.getElementById('pendente-msg-dinamica').innerHTML = '🏗️ <strong>Bem-vindo(a), ' + primeiroNome + '!</strong><br><br>Seu acesso ao ObraFácil está liberado.<br><br>🎁 Você tem <strong>3 créditos de boas-vindas</strong> para garantir seus primeiros clientes!';
-    if (senhaRecebida) {
-      const boxAcesso = document.getElementById('pendente-acesso');
-      boxAcesso.innerHTML = '🔑 <strong>Seus dados de acesso:</strong><br>WhatsApp: <strong>' + tel + '</strong><br>Senha: <strong style="font-size:16px;color:#ff8c00">' + senhaRecebida + '</strong><br><br>⚠️ Guarde sua senha!';
-      boxAcesso.style.display = 'block';
-    }
-    const msgWpp = 'Ola! Acabei de me cadastrar no ObraFacil como ' + prof + '.\nMeu nome: ' + nome + '.\nWhatsApp: ' + tel + '.\nQuero começar a usar!';
-    document.getElementById('wpp-pendente').href = 'https://wa.me/' + WHATSAPP_ADMIN + '?text=' + encodeURIComponent(msgWpp);
-    document.getElementById('card-auth').style.display = 'none';
-    document.getElementById('card-pendente').style.display = 'block';
-  } catch(e) {
-    btn.disabled = false; btn.innerHTML = 'Enviar cadastro';
-    erroDiv.textContent = 'Erro ao enviar. Tente novamente.'; erroDiv.style.display = 'block';
+
+  // Validações
+  if (!nome || nome.length < 3) {
+    erroDiv.textContent = 'Digite seu nome completo (minimo 3 caracteres).';
+    erroDiv.style.display = 'block'; return;
   }
+  if (tel.replace(/\D/g,'').length < 10) {
+    erroDiv.textContent = 'Digite um WhatsApp valido com DDD.';
+    erroDiv.style.display = 'block'; return;
+  }
+  if (!prof) {
+    erroDiv.textContent = 'Selecione sua profissao.';
+    erroDiv.style.display = 'block'; return;
+  }
+  if (!cidade) {
+    erroDiv.textContent = 'Digite sua cidade.';
+    erroDiv.style.display = 'block'; return;
+  }
+  if (senha.length < 6) {
+    erroDiv.textContent = 'A senha deve ter pelo menos 6 caracteres.';
+    erroDiv.style.display = 'block'; return;
+  }
+  if (senha !== senha2) {
+    erroDiv.textContent = 'As senhas nao coincidem.';
+    erroDiv.style.display = 'block'; return;
+  }
+
+  var btn = document.getElementById('btn-cadastrar');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div>';
+
+  chamarBackend('solicitarCadastro', { nome, telefone: tel, profissao: prof, cidade, senha, observacoes: obs }).then(function(r) {
+      btn.disabled = false; btn.innerHTML = 'Enviar cadastro';
+      if (!r.sucesso) {
+        erroDiv.textContent = r.mensagem;
+        erroDiv.style.display = 'block'; return;
+      }
+      // ── MODAL "CADASTRO ATIVO" ────────────────────────────
+      var primeiroNome = nome.split(' ')[0] || nome;
+      var senhaRecebida = r.senha || '';
+      var link = window.location.href.split('?')[0];
+
+      // Mensagem principal
+      var msgDinamica = '🏗️ <strong>Cadastro Ativo! Olá, ' + primeiroNome + '!</strong><br><br>'
+        + 'Seu acesso ao ObraFacil está liberado.<br><br>'
+        + 'Verificamos que você busca serviços de <strong>' + prof + '</strong> em <strong>' + cidade + '</strong> '
+        + 'e já temos oportunidades aguardando você!<br><br>'
+        + '🎁 Aproveite seus <strong>3 créditos de boas-vindas</strong> e garanta seus primeiros clientes.<br><br>'
+        + 'Estamos à disposição para ajudar você a crescer! 💪';
+
+      document.getElementById('pendente-icon').textContent  = '✅';
+      document.getElementById('pendente-titulo').textContent = 'Cadastro Ativo!';
+      document.getElementById('pendente-msg-dinamica').innerHTML = msgDinamica;
+
+      // Box de acesso com senha
+      var boxAcesso = document.getElementById('pendente-acesso');
+      if (senhaRecebida) {
+        boxAcesso.innerHTML = '🔑 <strong>Seus dados de acesso:</strong><br>'
+          + 'WhatsApp: <strong>' + tel + '</strong><br>'
+          + 'Senha: <strong style="font-size:16px;color:#ff8c00">' + senhaRecebida + '</strong><br><br>'
+          + '⚠️ Guarde sua senha! Você também a recebeu no WhatsApp.';
+        boxAcesso.style.display = 'block';
+      }
+
+      // Botão de ir ao painel
+      var btnPainel = document.getElementById('btn-ir-painel');
+      if (btnPainel) btnPainel.href = link;
+
+      // Link WA com contexto completo
+      var msgWpp = 'Ola! Acabei de me cadastrar no ObraFacil como ' + prof + '.\n'
+        + 'Meu nome: ' + nome + '.\n'
+        + 'WhatsApp: ' + tel + '.\n'
+        + (obs ? 'Obs: ' + obs + '.\n' : '')
+        + 'Quero comecar a usar!';
+      document.getElementById('wpp-pendente').href =
+        'https://wa.me/' + WHATSAPP_ADMIN + '?text=' + encodeURIComponent(msgWpp);
+
+      // Mostra o card
+      document.getElementById('card-auth').style.display    = 'none';
+      document.getElementById('card-pendente').style.display = 'block';
+    }).catch(function(e) {
+      btn.disabled = false; btn.innerHTML = 'Enviar cadastro';
+      erroDiv.textContent = 'Erro ao enviar. Tente novamente.';
+      erroDiv.style.display = 'block';
+    });
 }
 
-// ── Logout ───────────────────────────────────────────────────
+// ── LOGOUT ────────────────────────────────────────────────────
 function sair() {
-  Object.values(timersDeadline).forEach(t => clearInterval(t));
+  Object.values(timersDeadline).forEach(function(t){ clearInterval(t); });
   timersDeadline = {};
-  profissional = null; limparSessao();
+  profissional = null;
+  limparSessao();
   document.getElementById('painel').classList.remove('show');
   document.getElementById('tela-login').style.display = 'flex';
   document.getElementById('inp-tel').value = '';
   document.getElementById('inp-senha').value = '';
+  document.getElementById('login-erro').style.display = 'none';
   mostrarAba('login');
 }
 
-// ── Painel ───────────────────────────────────────────────────
+// ── PAINEL ────────────────────────────────────────────────────
 function iniciarPainel() {
   document.getElementById('tela-login').style.display = 'none';
   document.getElementById('painel').classList.add('show');
-  document.getElementById('bv-nome').textContent = 'Olá, ' + profissional.nome.split(' ')[0] + '!';
+  var primeiroNome = String(profissional.nome).split(' ')[0];
+  document.getElementById('bv-nome').textContent = 'Ola, ' + primeiroNome + '!';
   atualizarSaldoUI(profissional.creditos);
   carregarLeads();
 }
 
 function atualizarSaldoUI(creditos) {
   document.getElementById('hd-creditos').textContent = creditos;
-  const pill = document.getElementById('saldo-pill');
+  var pill = document.getElementById('saldo-pill');
   if (creditos <= 0) {
     pill.classList.add('saldo-zero');
     document.getElementById('aviso-sem-credito').style.display = 'block';
@@ -460,80 +710,136 @@ function atualizarSaldoUI(creditos) {
     document.getElementById('aviso-sem-credito').style.display = 'none';
     document.getElementById('lista-leads').style.display = 'block';
   }
-  document.getElementById('bv-prof').textContent = profissional.profissao + ' — ' + creditos + ' créditos disponíveis';
+  document.getElementById('bv-prof').textContent = profissional.profissao + ' - ' + creditos + ' creditos disponiveis';
+}
+
+function atualizarSaldo(creditos) {
+  profissional.creditos = creditos;
+  salvarSessao(profissional);
+  atualizarSaldoUI(creditos);
 }
 
 function irTab(n) {
-  ['tab-leads','tab-comprar','tab-historico'].forEach((id, i) => {
+  ['tab-leads','tab-comprar','tab-historico'].forEach(function(id, i) {
     document.getElementById(id).style.display = i === n ? 'block' : 'none';
   });
-  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('on', i === n));
+  document.querySelectorAll('.tab-btn').forEach(function(b, i) {
+    b.classList.toggle('on', i === n);
+  });
+  tabAtual = n;
   if (n === 2) carregarHistorico();
 }
 
-// ── Leads ────────────────────────────────────────────────────
-async function carregarLeads() {
+// ── LEADS ─────────────────────────────────────────────────────
+function carregarLeads() {
   if (!profissional || profissional.creditos <= 0) return;
-  const lista = document.getElementById('lista-leads');
+  var lista = document.getElementById('lista-leads');
   lista.innerHTML = '<div class="vazio"><div class="vazio-titulo">Buscando leads...</div></div>';
-  try {
-    const r = await chamarBackend('getLeadsDisponiveis', { idProfissional: profissional.id });
-    if (!r.sucesso) { lista.innerHTML = '<div class="vazio"><div class="vazio-titulo">Erro: ' + r.mensagem + '</div></div>'; return; }
-    if (!r.leads || !r.leads.length) {
-      lista.innerHTML = '<div class="vazio"><div class="vazio-icon">📭</div><div class="vazio-titulo">Nenhum lead disponível agora</div><div class="vazio-desc">Novos leads aparecem aqui assim que entram no sistema.</div></div>';
-      return;
-    }
-    lista.innerHTML = r.leads.map(renderLead).join('');
-    r.leads.forEach(lead => { if (lead.deadline && !lead.jaDesbloqueado) iniciarTimerDeadline(lead.id, lead.deadline); });
-  } catch(e) {
-    lista.innerHTML = '<div class="vazio"><div class="vazio-titulo">Erro de conexão. Verifique sua internet.</div></div>';
-  }
+
+  chamarBackend('getLeadsDisponiveis', { idProfissional: profissional.id }).then(function(r) {
+      if (!r.sucesso) {
+        lista.innerHTML = '<div class="vazio"><div class="vazio-titulo">Erro: ' + r.mensagem + '</div></div>';
+        return;
+      }
+      if (!r.leads || !r.leads.length) {
+        lista.innerHTML = '<div class="vazio"><div class="vazio-icon">📭</div><div class="vazio-titulo">Nenhum lead disponivel agora</div><div class="vazio-desc">Novos leads aparecem aqui assim que entram no sistema.</div></div>';
+        return;
+      }
+      lista.innerHTML = r.leads.map(renderLead).join('');
+      r.leads.forEach(function(lead) {
+        if (lead.deadline && !lead.jaDesbloqueado) iniciarTimerDeadline(lead.id, lead.deadline);
+      });
+    }).catch(function(e) {
+      lista.innerHTML = '<div class="vazio"><div class="vazio-titulo">Erro de comunicação</div></div>';
+    });
 }
 
 function renderLead(lead) {
-  const qtd = lead.qtdJaViram || 0;
+  var qtd   = lead.qtdJaViram || 0;
+  var vagas = lead.vagasRestantes !== undefined ? lead.vagasRestantes : Math.max(0, 3 - qtd);
+
+  // ── Lead JÁ DESBLOQUEADO com contato disponível ──────────
   if (lead.jaDesbloqueado && lead.contato) {
-    const c = lead.contato;
-    const telLimpo = (c.Telefone || '').replace(/\D/g,'');
-    const wppMsg = 'Olá ' + c.Nome + '! Vi sua solicitação de ' + lead.tipoObra + ' pelo ObraFácil. Posso te ajudar!';
-    return '<div class="lead-card desbloqueado"><div class="lead-topo"><div class="lead-tipo">' + lead.tipoObra + '</div><div class="lead-badges"><span class="badge badge-desb">✅ Desbloqueado</span></div></div>'
-      + '<div class="lead-info"><span>📍 ' + lead.cidade + '</span><span>📅 ' + lead.data + '</span></div>'
+    var c       = lead.contato;
+    var telLimpo = (c.Telefone || '').replace(/\D/g, '');
+    var wppMsg  = 'Ola ' + c.Nome + '! Vi sua solicitacao de ' + lead.tipoObra + ' pelo ObraFacil. Posso te ajudar!';
+    var wppLink = 'https://wa.me/55' + telLimpo + '?text=' + encodeURIComponent(wppMsg);
+
+    return '<div class="lead-card desbloqueado" id="card-' + lead.id + '">'
+      + '<div class="lead-topo"><div class="lead-tipo">' + lead.tipoObra + '</div>'
+      + '<div class="lead-badges"><span class="badge badge-desb">✅ Desbloqueado</span></div></div>'
+      + '<div class="lead-info"><span>' + lead.cidade + '</span><span>' + lead.data + '</span></div>'
       + (lead.observacaoResumida ? '<div class="lead-obs">' + lead.observacaoResumida + '</div>' : '')
-      + '<div class="lead-contato"><div class="contato-item"><span class="contato-label">Nome</span><span class="contato-val">' + (c.Nome || 'N/A') + '</span></div>'
-      + '<div class="contato-item"><span class="contato-label">Telefone</span><span class="contato-val"><a href="tel:' + (c.Telefone || '') + '">' + (c.Telefone || 'N/A') + '</a></span></div></div>'
-      + '<div class="lead-footer"><span class="lead-data">Contato já desbloqueado</span>'
-      + '<a class="btn-whatsapp" href="https://wa.me/55' + telLimpo + '?text=' + encodeURIComponent(wppMsg) + '" target="_blank">Abrir WhatsApp</a></div></div>';
+      + '<div class="lead-contato">'
+      + '<div class="contato-item"><span class="contato-label">Nome</span>'
+      + '<span class="contato-val">' + (c.Nome || 'N/A') + '</span></div>'
+      + '<div class="contato-item"><span class="contato-label">Telefone</span>'
+      + '<span class="contato-val"><a href="tel:' + (c.Telefone || '') + '">'
+      + (c.Telefone || 'N/A') + '</a></span></div>'
+      + '</div>'
+      + '<div class="lead-footer"><span class="lead-data">Contato ja desbloqueado</span>'
+      + '<a class="btn-whatsapp" href="' + wppLink + '" target="_blank">Abrir WhatsApp</a>'
+      + '</div></div>';
   }
+
+  // ── Lead desbloqueado mas sem contato no payload ─────────
+  // (segurança: manda pro histórico onde está o contato completo)
   if (lead.jaDesbloqueado) {
-    return '<div class="lead-card desbloqueado"><div class="lead-topo"><div class="lead-tipo">' + lead.tipoObra + '</div><div class="lead-badges"><span class="badge badge-desb">✅ Desbloqueado</span></div></div>'
-      + '<div class="lead-footer"><span class="lead-data">Ver contato completo no Histórico</span><button class="btn-desbloquear" style="background:var(--verde)" onclick="irTab(2)">Ver no Histórico</button></div></div>';
+    return '<div class="lead-card desbloqueado" id="card-' + lead.id + '">'
+      + '<div class="lead-topo"><div class="lead-tipo">' + lead.tipoObra + '</div>'
+      + '<div class="lead-badges"><span class="badge badge-desb">✅ Desbloqueado</span></div></div>'
+      + '<div class="lead-info"><span>' + lead.cidade + '</span><span>' + lead.data + '</span></div>'
+      + '<div class="lead-footer">'
+      + '<span class="lead-data">Ver contato completo no Historico</span>'
+      + '<button class="btn-desbloquear" style="background:var(--verde)" onclick="irTab(2)">Ver no Historico</button>'
+      + '</div></div>';
   }
-  let badgeEscassez = '';
-  if (qtd === 0) badgeEscassez = '<span class="badge" style="background:#e0f2fe;color:#0369a1">3 vagas</span>';
-  else if (qtd === 1) badgeEscassez = '<span class="badge badge-urgente">⚡ 2 vagas restantes</span>';
-  else if (qtd === 2) badgeEscassez = '<span class="badge badge-quente">🔥 ÚLTIMA VAGA!</span>';
-  const timerHtml = lead.deadline ? '<span class="deadline-timer" id="timer-' + lead.id + '">Calculando...</span>' : '';
-  let concorrencia = '';
-  if (qtd === 1) concorrencia = '<br><span class="concorrencia">1 profissional já desbloqueou</span>';
-  else if (qtd === 2) concorrencia = '<br><span class="concorrencia" style="color:var(--vermelho);font-weight:700">2 já desbloquearam — última vaga!</span>';
+
+  // ── Lead disponível para desbloquear ─────────────────────
+  var badgeEscassez = '';
+  if (qtd === 0) {
+    badgeEscassez = '<span class="badge" style="background:#e0f2fe;color:#0369a1">3 vagas</span>';
+  } else if (qtd === 1) {
+    badgeEscassez = '<span class="badge badge-urgente">⚡ 2 vagas restantes</span>';
+  } else if (qtd === 2) {
+    badgeEscassez = '<span class="badge badge-quente">🔥 ÚLTIMA VAGA!</span>';
+  }
+
+  var badgeUrgente = lead.deadline ? '<span class="badge badge-urgente">Expira em breve</span>' : '';
+  var timerHtml    = lead.deadline ? '<span class="deadline-timer" id="timer-' + lead.id + '">Calculando...</span>' : '';
+
+  var concorrenciaHtml = '';
+  if (qtd === 1) {
+    concorrenciaHtml = '<br><span class="concorrencia">1 profissional ja desbloqueou</span>';
+  } else if (qtd === 2) {
+    concorrenciaHtml = '<br><span class="concorrencia" style="color:var(--vermelho);font-weight:700">2 ja desbloquearam — ultima vaga!</span>';
+  }
+
   return '<div class="lead-card" id="card-' + lead.id + '">'
-    + '<div class="lead-topo"><div class="lead-tipo">' + lead.tipoObra + '</div><div class="lead-badges"><span class="badge badge-novo">Novo</span>' + badgeEscassez + '</div></div>'
-    + '<div class="lead-info"><span>📍 ' + lead.cidade + '</span><span>📅 ' + lead.data + '</span></div>'
+    + '<div class="lead-topo"><div class="lead-tipo">' + lead.tipoObra + '</div>'
+    + '<div class="lead-badges"><span class="badge badge-novo">Novo</span>' + badgeEscassez + badgeUrgente + '</div></div>'
+    + '<div class="lead-info"><span>' + lead.cidade + (lead.bairro ? ' - ' + lead.bairro : '') + '</span><span>' + lead.data + '</span></div>'
     + (lead.observacaoResumida ? '<div class="lead-obs">' + lead.observacaoResumida + '</div>' : '')
-    + '<div class="lead-footer"><div>' + timerHtml + concorrencia + '</div>'
-    + '<button class="btn-desbloquear" onclick="desbloquear(\'' + lead.id + '\', this)">Desbloquear (1 crédito)</button></div></div>';
+    + '<div class="lead-footer"><div>' + timerHtml + concorrenciaHtml + '</div>'
+    + '<button class="btn-desbloquear" onclick="desbloquear(\'' + lead.id + '\', this)">Desbloquear (1 credito)</button>'
+    + '</div></div>';
 }
 
 function iniciarTimerDeadline(idLead, deadlineStr) {
   if (timersDeadline[idLead]) clearInterval(timersDeadline[idLead]);
-  const deadline = new Date(deadlineStr).getTime();
+  var deadline = new Date(deadlineStr).getTime();
   function atualizar() {
-    const restante = deadline - Date.now();
-    const el = document.getElementById('timer-' + idLead);
+    var restante = deadline - Date.now();
+    var el = document.getElementById('timer-' + idLead);
     if (!el) { clearInterval(timersDeadline[idLead]); return; }
-    if (restante <= 0) { clearInterval(timersDeadline[idLead]); const card = document.getElementById('card-' + idLead); if (card) card.style.display = 'none'; return; }
-    const m = Math.floor(restante / 60000);
-    const s = Math.floor((restante % 60000) / 1000);
+    if (restante <= 0) {
+      clearInterval(timersDeadline[idLead]);
+      var card = document.getElementById('card-' + idLead);
+      if (card) card.style.display = 'none';
+      return;
+    }
+    var m = Math.floor(restante / 60000);
+    var s = Math.floor((restante % 60000) / 1000);
     el.textContent = m + 'm ' + String(s).padStart(2,'0') + 's';
     if (restante < 120000) el.classList.add('urgente');
   }
@@ -541,84 +847,100 @@ function iniciarTimerDeadline(idLead, deadlineStr) {
   timersDeadline[idLead] = setInterval(atualizar, 1000);
 }
 
-async function desbloquear(idLead, btn) {
-  if (!profissional || profissional.creditos <= 0) { document.getElementById('modal-sem-cred').classList.add('show'); return; }
-  const orig = btn.innerHTML;
-  btn.disabled = true; btn.innerHTML = '<div class="spinner"></div>';
-  try {
-    const r = await chamarBackend('desbloquearLead', { idProfissional: profissional.id, idLead });
-    btn.disabled = false; btn.innerHTML = orig;
-    if (!r.sucesso) {
-      if (r.semCredito) { document.getElementById('modal-sem-cred').classList.add('show'); return; }
-      if (r.esgotado) {
-        const card = document.getElementById('card-' + idLead);
-        if (card) { card.innerHTML = '<div style="padding:12px;text-align:center;color:var(--vermelho);font-size:13px;font-weight:600">🔴 Este lead foi esgotado agora. Verifique outros leads.</div>'; setTimeout(() => card.style.display = 'none', 3000); }
-        toast('Lead esgotado! Outro profissional chegou primeiro.', 'info'); return;
+function desbloquear(idLead, btn) {
+  if (!profissional || profissional.creditos <= 0) {
+    document.getElementById('modal-sem-cred').classList.add('show'); return;
+  }
+  var orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div>';
+  chamarBackend('desbloquearLead', { idProfissional: profissional.id, idLead: idLead }).then(function(r) {
+      btn.disabled = false; btn.innerHTML = orig;
+      if (!r.sucesso) {
+        if (r.semCredito) { document.getElementById('modal-sem-cred').classList.add('show'); return; }
+        if (r.esgotado) {
+          var card = document.getElementById('card-' + idLead);
+          if (card) {
+            card.innerHTML = '<div style="padding:12px;text-align:center;color:var(--vermelho);font-size:13px;font-weight:600">'
+              + '🔴 Este lead foi esgotado agora. Verifique outros leads.'
+              + '</div>';
+            setTimeout(function(){ if(card) card.style.display='none'; }, 3000);
+          }
+          toast('Lead esgotado! Outro profissional chegou primeiro.', 'info');
+          return;
+        }
+        toast(r.mensagem, 'erro'); return;
       }
-      toast(r.mensagem, 'erro'); return;
-    }
-    toast(r.mensagem, 'sucesso');
-    profissional.creditos = r.creditosRestantes;
-    salvarSessao(profissional);
-    atualizarSaldoUI(r.creditosRestantes);
-    preencherContato(idLead, r.lead);
-    if (timersDeadline[idLead]) { clearInterval(timersDeadline[idLead]); delete timersDeadline[idLead]; }
-  } catch(e) { btn.disabled = false; btn.innerHTML = orig; toast('Erro: ' + e.message, 'erro'); }
+      toast(r.mensagem, 'sucesso');
+      atualizarSaldo(r.creditosRestantes);
+      preencherContato(idLead, r.lead);
+      if (timersDeadline[idLead]) { clearInterval(timersDeadline[idLead]); delete timersDeadline[idLead]; }
+    }).catch(function(e) {
+      btn.disabled = false; btn.innerHTML = orig;
+      toast('Erro: ' + e.message, 'erro');
+    });
 }
 
 function preencherContato(idLead, lead) {
-  const card = document.getElementById('card-' + idLead);
+  var card = document.getElementById('card-' + idLead);
   if (!card) return;
-  const telLimpo = (lead.Telefone || '').replace(/\D/g,'');
-  const wppMsg = 'Olá ' + lead.Nome + '! Vi sua solicitação de ' + lead.Tipo_Obra + ' pelo ObraFácil. Posso te ajudar!';
+  var telLimpo = (lead.Telefone || '').replace(/\D/g,'');
+  var wppMsg = 'Ola ' + lead.Nome + '! Vi sua solicitacao de ' + lead.Tipo_Obra + ' pelo ObraFacil. Posso te ajudar!';
+  var wppLink = 'https://wa.me/55' + telLimpo + '?text=' + encodeURIComponent(wppMsg);
   card.classList.add('desbloqueado');
-  card.innerHTML = '<div class="lead-topo"><div class="lead-tipo">' + lead.Tipo_Obra + '</div><div class="lead-badges"><span class="badge badge-desb">Desbloqueado</span></div></div>'
-    + '<div class="lead-info"><span>📍 ' + (lead.Cidade||'') + '</span><span>📅 ' + (lead.Data_Entrada||'') + '</span></div>'
+  card.innerHTML =
+    '<div class="lead-topo"><div class="lead-tipo">' + lead.Tipo_Obra + '</div><div class="lead-badges"><span class="badge badge-desb">Desbloqueado</span></div></div>'
+    + '<div class="lead-info"><span>' + (lead.Cidade||'') + '</span><span>' + (lead.Data_Entrada||'') + '</span></div>'
     + (lead.Observacoes ? '<div class="lead-obs">' + lead.Observacoes + '</div>' : '')
-    + '<div class="lead-contato"><div class="contato-item"><span class="contato-label">Nome</span><span class="contato-val">' + (lead.Nome||'N/A') + '</span></div>'
-    + '<div class="contato-item"><span class="contato-label">Telefone</span><span class="contato-val"><a href="tel:' + (lead.Telefone||'') + '">' + (lead.Telefone||'N/A') + '</a></span></div></div>'
-    + '<div class="lead-footer"><span class="lead-data">Contato desbloqueado</span><a class="btn-whatsapp" href="https://wa.me/55' + telLimpo + '?text=' + encodeURIComponent(wppMsg) + '" target="_blank">Abrir WhatsApp</a></div>';
+    + '<div class="lead-contato">'
+    + '<div class="contato-item"><span class="contato-label">Nome</span><span class="contato-val">' + (lead.Nome||'N/A') + '</span></div>'
+    + '<div class="contato-item"><span class="contato-label">Telefone</span><span class="contato-val"><a href="tel:' + (lead.Telefone||'') + '">' + (lead.Telefone||'N/A') + '</a></span></div>'
+    + '</div>'
+    + '<div class="lead-footer"><span class="lead-data">Contato desbloqueado</span>'
+    + '<a class="btn-whatsapp" href="' + wppLink + '" target="_blank">Abrir WhatsApp</a></div>';
 }
 
 function selecionarPacote(creditos, valor, el) {
-  document.querySelectorAll('.pacote').forEach(p => p.style.borderColor = '');
+  document.querySelectorAll('.pacote').forEach(function(p){ p.style.borderColor=''; });
   el.style.borderColor = 'var(--laranja)';
-  const box = document.getElementById('pix-instrucao');
-  document.getElementById('pix-detalhe').textContent = creditos + ' créditos por R$ ' + valor + ' — envie exatamente R$ ' + valor + ',00';
-  const wppMsg = 'Olá! Quero comprar o pacote de ' + creditos + ' créditos por R$ ' + valor + '. Meu cadastro: ' + (profissional ? profissional.nome + ' (' + profissional.id + ')' : '') + '. Segue o comprovante:';
+  var box = document.getElementById('pix-instrucao');
+  document.getElementById('pix-detalhe').textContent = creditos + ' creditos por R$ ' + valor + ' - envie exatamente R$ ' + valor + ',00';
+  var wppMsg = 'Ola! Quero comprar o pacote de ' + creditos + ' creditos por R$ ' + valor
+    + '. Meu cadastro: ' + profissional.nome + ' (' + profissional.id + '). Segue o comprovante:';
   document.getElementById('pix-wpp').href = 'https://wa.me/' + WHATSAPP_ADMIN + '?text=' + encodeURIComponent(wppMsg);
   box.style.display = 'block';
-  box.scrollIntoView({ behavior: 'smooth' });
+  box.scrollIntoView({behavior:'smooth'});
 }
 
-async function carregarHistorico() {
-  const lista = document.getElementById('lista-historico');
+function carregarHistorico() {
+  var lista = document.getElementById('lista-historico');
   lista.innerHTML = '<div class="vazio"><div class="vazio-titulo">Buscando...</div></div>';
-  try {
-    const r = await chamarBackend('getHistoricoDesb', { idProfissional: profissional.id });
-    if (!r.sucesso || !r.historico.length) { lista.innerHTML = '<div class="vazio"><div class="vazio-titulo">Nenhum lead desbloqueado ainda</div></div>'; return; }
-    lista.innerHTML = r.historico.map(h =>
-      '<div class="hist-item"><div class="hist-info"><strong>' + h.tipoObra + ' — ' + h.cidade + '</strong><span>' + h.nome + ' | ' + h.telefone + '</span></div><div class="hist-data">' + h.data + '</div></div>'
-    ).join('');
-  } catch(e) { lista.innerHTML = '<div class="vazio"><div class="vazio-titulo">Erro ao carregar.</div></div>'; }
+  chamarBackend('getHistoricoDesb', { idProfissional: profissional.id }).then(function(r) {
+      if (!r.sucesso || !r.historico.length) {
+        lista.innerHTML = '<div class="vazio"><div class="vazio-titulo">Nenhum lead desbloqueado ainda</div></div>';
+        return;
+      }
+      lista.innerHTML = r.historico.map(function(h) {
+        return '<div class="hist-item">'
+          + '<div class="hist-info"><strong>' + h.tipoObra + ' - ' + h.cidade + '</strong><span>' + h.nome + '</span></div>'
+          + '<div class="hist-data">' + h.data + '</div></div>';
+      }).join('');
+    }).catch(function(e) {
+      lista.innerHTML = '<div class="vazio"><div class="vazio-titulo">Erro: ' + e.message + '</div></div>';
+    });
 }
 
-// ── Init ─────────────────────────────────────────────────────
-window.addEventListener('load', async function() {
-  const sessao = carregarSessao();
+// ── INIT ──────────────────────────────────────────────────────
+window.addEventListener('load', function() {
+  var sessao = carregarSessao();
   if (sessao && sessao.id) {
     profissional = sessao;
-    try {
-      const r = await chamarBackend('getSaldoCreditos', { idProfissional: profissional.id });
-      if (r.sucesso) { profissional.creditos = r.creditos; salvarSessao(profissional); }
-    } catch(e) {}
-    iniciarPainel();
+    chamarBackend('getSaldoCreditos', { idProfissional: profissional.id }).then(function(r) {
+        if (r.sucesso) { profissional.creditos = r.creditos; salvarSessao(profissional); iniciarPainel(); }
+        else limparSessao();
+      }).catch(function() { iniciarPainel(); });
   }
 });
-
-// ── PWA install ──────────────────────────────────────────────
-let pwaEvento = null;
-window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); pwaEvento = e; });
 </script>
 </body>
 </html>
