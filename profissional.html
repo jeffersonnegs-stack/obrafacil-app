@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ObraFácil Pro">
+<meta name="theme-color" content="#0a0f1a">
+<title>ObraFácil — Profissional</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0f1a;--bg2:#111827;--bg3:#1a2235;--bg4:#243048;
+  --laranja:#ff6b00;--laranja2:#ff8c00;
+  --green:#00c853;--red:#ff3d3d;--amber:#ffab00;
+  --text:#f0f4ff;--muted:#64748b;--muted2:#94a3b8;
+  --bdr:rgba(255,255,255,0.07);
+  --r:16px;--H:'Barlow Condensed',sans-serif;--B:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--B);overflow:hidden}
+
+/* ── SPLASH ── */
+#splash{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity 0.4s}
+#splash.hide{opacity:0;pointer-events:none}
+.sp-logo{font-family:var(--H);font-size:52px;font-weight:800;letter-spacing:-1px;color:var(--text)}
+.sp-logo span{color:var(--laranja)}
+.sp-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted2)}
+.sp-bar{width:120px;height:2px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.sp-fill{height:100%;background:var(--laranja);border-radius:99px;animation:fillBar 1.8s ease forwards;width:0}
+@keyframes fillBar{to{width:100%}}
+
+/* ── APP ── */
+#app{height:100vh;display:flex;flex-direction:column;max-width:480px;margin:0 auto}
+
+/* ── TELAS ── */
+.tela{flex:1;overflow-y:auto;display:none;flex-direction:column;padding-bottom:72px}
+.tela.ativa{display:flex}
+::-webkit-scrollbar{width:0}
+
+/* ── NAV ── */
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:100;background:rgba(10,15,26,0.97);backdrop-filter:blur(20px);border-top:1px solid var(--bdr);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom)}
+.nb{display:flex;flex-direction:column;align-items:center;padding:10px 4px 8px;gap:3px;border:none;background:transparent;cursor:pointer;color:var(--muted);font-family:var(--B);font-size:10px;font-weight:500;transition:color 0.2s;position:relative}
+.nb-i{font-size:20px;transition:transform 0.2s}
+.nb.ativo{color:var(--laranja)}
+.nb.ativo .nb-i{transform:scale(1.2);filter:drop-shadow(0 0 8px rgba(255,107,0,0.7))}
+.nb.ativo::before{content:'';position:absolute;top:0;left:25%;right:25%;height:2px;background:var(--laranja);border-radius:0 0 3px 3px}
+
+/* ── LOGIN ── */
+#tela-login{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px 20px;gap:20px}
+.login-card{background:var(--bg2);border:1px solid var(--bdr);border-radius:24px;padding:32px 24px;width:100%;max-width:400px}
+.login-logo{font-family:var(--H);font-size:36px;font-weight:800;text-align:center;margin-bottom:4px}
+.login-logo span{color:var(--laranja)}
+.login-sub{font-size:12px;color:var(--muted2);text-align:center;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px}
+.auth-tabs{display:flex;background:var(--bg3);border-radius:10px;padding:3px;margin-bottom:22px;gap:3px}
+.auth-tab{flex:1;padding:9px;border:none;background:transparent;cursor:pointer;font-family:var(--B);font-size:13px;font-weight:600;color:var(--muted2);border-radius:8px;transition:all 0.2s}
+.auth-tab.on{background:var(--laranja);color:#fff}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
+.fg input,.fg select{width:100%;padding:13px 15px;background:var(--bg3);border:1.5px solid var(--bdr);border-radius:var(--r);font-size:14px;font-family:var(--B);color:var(--text);transition:border-color 0.2s}
+.fg input:focus,.fg select:focus{outline:none;border-color:var(--laranja)}
+.fg select option{background:var(--bg2)}
+.pw-wrap{position:relative}
+.pw-wrap input{padding-right:46px}
+.pw-eye{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;color:var(--muted2)}
+.btn-laranja{width:100%;padding:15px;background:var(--laranja);color:#fff;border:none;border-radius:var(--r);font-family:var(--H);font-size:18px;font-weight:700;cursor:pointer;letter-spacing:0.5px;transition:opacity 0.15s,transform 0.1s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px}
+.btn-laranja:active{opacity:0.88;transform:scale(0.98)}
+.btn-laranja:disabled{opacity:0.5;cursor:not-allowed}
+.msg-erro{background:rgba(255,61,61,0.1);border:1px solid rgba(255,61,61,0.3);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--red);text-align:center;margin-top:12px;display:none}
+.msg-ok{background:rgba(0,200,83,0.1);border:1px solid rgba(0,200,83,0.3);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--green);text-align:center;margin-top:12px;display:none}
+.wpp-link{display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:#fff;padding:13px;border-radius:var(--r);font-family:var(--H);font-size:16px;font-weight:700;text-decoration:none;margin-top:10px;letter-spacing:0.3px}
+
+/* ── HEADER DO PAINEL ── */
+.painel-header{background:linear-gradient(135deg,#0f1d35 0%,#0a0f1a 100%);padding:20px 18px 16px;border-bottom:1px solid var(--bdr)}
+.ph-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ph-logo{font-family:var(--H);font-size:22px;font-weight:800;color:var(--text)}
+.ph-logo span{color:var(--laranja)}
+.saldo-pill{display:flex;align-items:center;gap:8px;background:rgba(255,107,0,0.12);border:1px solid rgba(255,107,0,0.25);border-radius:99px;padding:7px 14px}
+.saldo-num{font-family:var(--H);font-size:20px;font-weight:800;color:var(--laranja)}
+.saldo-lbl{font-size:11px;color:var(--muted2)}
+.saldo-zero .saldo-num{color:var(--red)}
+.ph-nome{font-family:var(--H);font-size:26px;font-weight:700;color:var(--text)}
+.ph-prof{font-size:13px;color:var(--muted2);margin-top:2px}
+
+/* ── CARDS ── */
+.card{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:18px}
+.card-lbl{font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+.tb{display:flex;flex-direction:column;gap:12px;padding:14px 16px}
+
+/* ── LEAD CARD ── */
+.lead-card{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:16px;transition:border-color 0.2s,transform 0.15s}
+.lead-card:active{transform:scale(0.99)}
+.lead-card.desb{border-color:rgba(0,200,83,0.35);background:rgba(0,200,83,0.04)}
+.lead-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:8px}
+.lead-tipo{font-family:var(--H);font-size:20px;font-weight:700;color:var(--text)}
+.lead-badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600}
+.badge-novo{background:rgba(59,130,246,0.15);color:#60a5fa}
+.badge-desb{background:rgba(0,200,83,0.15);color:var(--green)}
+.badge-quente{background:rgba(255,61,61,0.15);color:var(--red)}
+.badge-urg{background:rgba(255,171,0,0.15);color:var(--amber)}
+.lead-info{font-size:13px;color:var(--muted2);display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.lead-obs{font-size:13px;color:var(--text);background:var(--bg3);border-radius:10px;padding:10px 12px;margin-bottom:12px;line-height:1.6}
+.contato-box{background:rgba(0,200,83,0.06);border:1px solid rgba(0,200,83,0.2);border-radius:12px;padding:12px;margin-bottom:12px}
+.contato-row{display:flex;align-items:center;gap:10px;padding:6px 0}
+.contato-lbl{font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;min-width:60px}
+.contato-val{font-size:14px;font-weight:600;color:var(--text)}
+.lead-footer{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.lead-data{font-size:11px;color:var(--muted)}
+.vagas-txt{font-size:12px;font-weight:700}
+.vagas-0{color:#60a5fa}.vagas-1{color:var(--amber)}.vagas-2{color:var(--red)}
+.timer-pill{font-size:11px;font-weight:700;background:rgba(255,171,0,0.15);color:var(--amber);padding:3px 10px;border-radius:99px}
+.timer-pill.urg{background:rgba(255,61,61,0.15);color:var(--red)}
+.btn-desb{padding:10px 18px;background:var(--laranja);color:#fff;border:none;border-radius:var(--r);font-family:var(--H);font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.15s;display:flex;align-items:center;gap:6px;letter-spacing:0.3px}
+.btn-desb:active{opacity:0.85}
+.btn-desb:disabled{opacity:0.5;cursor:not-allowed}
+.btn-wpp{padding:10px 18px;background:var(--green);color:#fff;border:none;border-radius:var(--r);font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.sem-cred-box{background:rgba(255,61,61,0.06);border:2px solid rgba(255,61,61,0.3);border-radius:var(--r);padding:20px;text-align:center;margin:16px}
+.sem-cred-titulo{font-family:var(--H);font-size:20px;font-weight:700;color:var(--red);margin-bottom:8px}
+.sem-cred-desc{font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:14px}
+
+/* ── PERFIL ── */
+.perfil-hero{background:linear-gradient(135deg,#0f1d35 0%,#0a0f1a 100%);padding:28px 18px;display:flex;flex-direction:column;align-items:center;gap:10px;border-bottom:1px solid var(--bdr)}
+.perfil-avatar{width:80px;height:80px;border-radius:50%;background:var(--laranja);display:flex;align-items:center;justify-content:center;font-family:var(--H);font-size:32px;font-weight:800;color:#fff;box-shadow:0 0 0 4px rgba(255,107,0,0.2)}
+.perfil-nome{font-family:var(--H);font-size:28px;font-weight:800;color:var(--text)}
+.perfil-prof{font-size:13px;color:var(--muted2)}
+.perfil-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px}
+.pstat{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:14px;text-align:center}
+.pstat-val{font-family:var(--H);font-size:28px;font-weight:800;color:var(--laranja)}
+.pstat-lbl{font-size:11px;color:var(--muted2);margin-top:2px}
+
+/* ── COMPRAR ── */
+.pacotes-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pacote{background:var(--bg2);border:1.5px solid var(--bdr);border-radius:var(--r);padding:18px 14px;text-align:center;cursor:pointer;transition:all 0.2s}
+.pacote:active{transform:scale(0.97)}
+.pacote.sel{border-color:var(--laranja);background:rgba(255,107,0,0.06)}
+.pac-tag{font-size:10px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.pac-cred{font-family:var(--H);font-size:36px;font-weight:800;color:var(--text)}
+.pac-sub{font-size:11px;color:var(--muted2);margin:2px 0 10px}
+.pac-preco{font-family:var(--H);font-size:24px;font-weight:800;color:var(--laranja)}
+.pac-unit{font-size:11px;color:var(--muted);margin-top:3px}
+.pix-box{background:rgba(0,200,83,0.06);border:1.5px solid rgba(0,200,83,0.25);border-radius:var(--r);padding:18px;margin-top:14px;text-align:center;display:none}
+.pix-titulo{font-family:var(--H);font-size:18px;font-weight:700;color:var(--green);margin-bottom:8px}
+.pix-chave{font-family:var(--H);font-size:20px;font-weight:800;color:var(--text);margin:6px 0}
+.pix-desc{font-size:12px;color:var(--muted2);line-height:1.6}
+
+/* ── HISTORICO ── */
+.hist-item{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.hi-info strong{font-size:14px;font-weight:600;color:var(--text);display:block}
+.hi-info span{font-size:12px;color:var(--muted2)}
+.hi-data{font-size:11px;color:var(--muted);text-align:right}
+
+/* ── MODAL ── */
+#modover{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);display:none;align-items:flex-end}
+#modover.open{display:flex}
+#modal{background:var(--bg2);border-radius:24px 24px 0 0;width:100%;max-height:85vh;overflow-y:auto;border-top:1px solid var(--bdr);animation:slideUp 0.3s cubic-bezier(.2,0,.2,1);padding-bottom:32px}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mdrag{width:36px;height:3px;background:var(--bg4);border-radius:99px;margin:14px auto 0}
+
+/* ── UTILITARIOS ── */
+.spin{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ldg{display:flex;flex-direction:column;align-items:center;gap:12px;padding:48px 20px;color:var(--muted2);font-size:13px}
+.big-spin{width:30px;height:30px;border:3px solid rgba(255,107,0,0.15);border-top-color:var(--laranja);border-radius:50%;animation:spin 0.8s linear infinite}
+.empty{text-align:center;padding:40px 20px;color:var(--muted2);font-size:14px;line-height:1.7}
+.empty-ico{font-size:44px;margin-bottom:12px;opacity:0.25}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);padding:12px 20px;border-radius:var(--r);color:#fff;font-weight:600;font-size:13px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999;white-space:nowrap}
+.toast.show{opacity:1}
+.toast.ok{background:var(--green)}.toast.err{background:var(--red)}.toast.info{background:var(--laranja)}
+.forca-bar{height:4px;border-radius:99px;background:var(--bg3);overflow:hidden;margin:4px 0 8px}
+.forca-fill{height:100%;border-radius:99px;transition:width 0.3s,background 0.3s}
+.forca-txt{font-size:11px;color:var(--muted2);margin-bottom:10px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+    <div style="width:72px;height:72px;background:var(--laranja);border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:var(--H);font-size:34px;font-weight:800;color:#fff;box-shadow:0 0 40px rgba(255,107,0,0.4)">O</div>
+    <div class="sp-logo">Obra<span>Fácil</span></div>
+  </div>
+  <div class="sp-tag">Area do Profissional</div>
+  <div class="sp-bar"><div class="sp-fill"></div></div>
+</div>
+
+<!-- LOGIN -->
+<div id="tela-login" style="display:none;min-height:100vh;overflow-y:auto;padding:24px 20px">
+  <div class="login-card">
+    <div class="login-logo">Obra<span>Fácil</span></div>
+    <div class="login-sub">Area do Profissional</div>
+    <div class="auth-tabs">
+      <button class="auth-tab on" id="tab-ent" onclick="abaLogin('entrar')">Entrar</button>
+      <button class="auth-tab" id="tab-cad" onclick="abaLogin('cadastro')">Cadastrar</button>
+    </div>
+    <!-- ENTRAR -->
+    <div id="form-entrar">
+      <div class="fg"><label>WhatsApp</label><input id="l-tel" type="tel" placeholder="(15) 99999-9999" oninput="maskTel(this)" onkeydown="if(event.key==='Enter')document.getElementById('l-senha').focus()"></div>
+      <div class="fg"><label>Senha</label>
+        <div class="pw-wrap"><input id="l-senha" type="password" placeholder="Sua senha" onkeydown="if(event.key==='Enter')entrar()">
+        <button class="pw-eye" onclick="togglePw('l-senha',this)" type="button">👁️</button></div>
+      </div>
+      <button class="btn-laranja" id="btn-entrar" onclick="entrar()">ENTRAR</button>
+      <div class="msg-erro" id="err-login"></div>
+    </div>
+    <!-- CADASTRO -->
+    <div id="form-cadastro" style="display:none">
+      <div class="form-row">
+        <div class="fg"><label>Nome *</label><input id="c-nome" type="text" placeholder="Joao Silva"></div>
+        <div class="fg"><label>WhatsApp *</label><input id="c-tel" type="tel" placeholder="(15) 9..." oninput="maskTel(this)"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Profissao *</label>
+          <select id="c-prof">
+            <option value="">Selecione...</option>
+            <option>Pedreiro</option><option>Pintor</option>
+            <option>Eletricista</option><option>Encanador</option><option>Paisagista</option>
+          </select>
+        </div>
+        <div class="fg"><label>Cidade *</label><input id="c-cidade" placeholder="Itapetininga"></div>
+      </div>
+      <div class="fg"><label>Criar Senha *</label>
+        <div class="pw-wrap"><input id="c-senha" type="password" placeholder="Min. 6 caracteres" oninput="checkForca(this)">
+        <button class="pw-eye" onclick="togglePw('c-senha',this)" type="button">👁️</button></div>
+        <div class="forca-bar"><div class="forca-fill" id="forca-fill" style="width:0"></div></div>
+        <div class="forca-txt" id="forca-txt">Digite uma senha</div>
+      </div>
+      <div class="fg"><label>Confirmar Senha *</label><input id="c-senha2" type="password" placeholder="Repita a senha" onkeydown="if(event.key==='Enter')cadastrar()"></div>
+      <div class="fg"><label>Observacoes</label><input id="c-obs" placeholder="Experiencia, especialidade..."></div>
+      <button class="btn-laranja" id="btn-cad" onclick="cadastrar()">ENVIAR CADASTRO</button>
+      <div class="msg-erro" id="err-cad"></div>
+      <div class="msg-ok" id="ok-cad"></div>
+    </div>
+    <a class="wpp-link" href="https://wa.me/5511971776347?text=Ola!+Quero+me+cadastrar+no+ObraFacil" target="_blank">📲 Falar com ObraFácil</a>
+  </div>
+</div>
+
+<!-- APP PAINEL -->
+<div id="app" style="display:none">
+  <!-- LEADS -->
+  <div class="tela ativa" id="tela-leads">
+    <div class="painel-header">
+      <div class="ph-top">
+        <div class="ph-logo">Obra<span>Fácil</span></div>
+        <div class="saldo-pill" id="saldo-pill">
+          <div class="saldo-num" id="hd-cred">0</div>
+          <div class="saldo-lbl">créditos</div>
+        </div>
+      </div>
+      <div class="ph-nome" id="hd-nome">Olá!</div>
+      <div class="ph-prof" id="hd-prof"></div>
+    </div>
+    <div id="sem-cred" class="sem-cred-box" style="display:none">
+      <div class="sem-cred-titulo">Créditos esgotados!</div>
+      <div class="sem-cred-desc">Você precisa de créditos para desbloquear novos leads. Compre um pacote e continue recebendo clientes.</div>
+      <button class="btn-laranja" style="max-width:280px;margin:0 auto" onclick="irTab('comprar',document.querySelectorAll('.nb')[2])">Comprar créditos</button>
+    </div>
+    <div class="tb" id="lista-leads"><div class="ldg"><div class="big-spin"></div>Buscando leads...</div></div>
+  </div>
+
+  <!-- HISTORICO -->
+  <div class="tela" id="tela-hist">
+    <div style="padding:20px 18px 8px;font-family:var(--H);font-size:28px;font-weight:800;border-bottom:1px solid var(--bdr)">Histórico</div>
+    <div class="tb" id="lista-hist"><div class="ldg"><div class="big-spin"></div>Carregando...</div></div>
+  </div>
+
+  <!-- COMPRAR -->
+  <div class="tela" id="tela-comprar">
+    <div style="padding:20px 18px 8px;font-family:var(--H);font-size:28px;font-weight:800;border-bottom:1px solid var(--bdr)">Comprar Créditos</div>
+    <div class="tb">
+      <div style="font-size:13px;color:var(--muted2);line-height:1.7">Cada crédito desbloqueia o contato de 1 cliente. Uma obra vale R$ 2.000 a R$ 8.000 — você investe menos de 1% para receber o lead.</div>
+      <div class="pacotes-grid">
+        <div class="pacote" onclick="selPacote(5,75,this)"><div class="pac-tag">Iniciante</div><div class="pac-cred">5</div><div class="pac-sub">créditos</div><div class="pac-preco">R$75</div><div class="pac-unit">R$15 por lead</div></div>
+        <div class="pacote" onclick="selPacote(12,150,this)"><div class="pac-tag" style="color:var(--laranja)">Popular</div><div class="pac-cred">12</div><div class="pac-sub">créditos</div><div class="pac-preco">R$150</div><div class="pac-unit">R$12,50 por lead</div></div>
+        <div class="pacote" onclick="selPacote(25,250,this)"><div class="pac-tag" style="color:var(--green)">Profissional</div><div class="pac-cred">25</div><div class="pac-sub">créditos</div><div class="pac-preco">R$250</div><div class="pac-unit">R$10 por lead</div></div>
+        <div class="pacote" onclick="selPacote(50,450,this)"><div class="pac-tag" style="color:var(--amber)">Premium</div><div class="pac-cred">50</div><div class="pac-sub">créditos</div><div class="pac-preco">R$450</div><div class="pac-unit">R$9 por lead</div></div>
+      </div>
+      <div class="pix-box" id="pix-box">
+        <div class="pix-titulo">Pague via Pix</div>
+        <div id="pix-det" style="font-size:13px;color:var(--muted2);margin-bottom:8px"></div>
+        <div class="pix-chave">11971776347</div>
+        <div class="pix-desc">Envie o comprovante para o WhatsApp. Créditos adicionados em até 30 min.</div>
+        <a id="pix-wpp" href="#" target="_blank" class="btn-wpp" style="margin:14px auto 0;display:inline-flex">📲 Enviar comprovante</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERFIL -->
+  <div class="tela" id="tela-perfil">
+    <div class="perfil-hero">
+      <div class="perfil-avatar" id="perf-avatar">?</div>
+      <div class="perfil-nome" id="perf-nome">--</div>
+      <div class="perfil-prof" id="perf-prof">--</div>
+    </div>
+    <div class="perfil-stats">
+      <div class="pstat"><div class="pstat-val" id="ps-cred">0</div><div class="pstat-lbl">Créditos</div></div>
+      <div class="pstat"><div class="pstat-val" id="ps-desb">0</div><div class="pstat-lbl">Desbloq.</div></div>
+      <div class="pstat"><div class="pstat-val" id="ps-disp">--</div><div class="pstat-lbl">Status</div></div>
+    </div>
+    <div class="tb">
+      <div class="card">
+        <div class="card-lbl">Informações</div>
+        <div id="perf-info" style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--muted2)"></div>
+      </div>
+      <button class="btn-laranja" style="background:var(--bg3);color:var(--muted2);border:1px solid var(--bdr)" onclick="sair()">Sair da conta</button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <button class="nb ativo" onclick="irTab('leads',this)"><span class="nb-i">🏠</span>Leads</button>
+    <button class="nb" onclick="irTab('hist',this)"><span class="nb-i">📋</span>Histórico</button>
+    <button class="nb" onclick="irTab('comprar',this)"><span class="nb-i">💳</span>Créditos</button>
+    <button class="nb" onclick="irTab('perfil',this)"><span class="nb-i">👤</span>Perfil</button>
+  </nav>
+</div>
+
+<!-- MODAL -->
+<div id="modover" onclick="if(event.target===this)fecharMod()">
+  <div id="modal"><div class="mdrag"></div><div id="modcont"></div></div>
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+var SCRIPT = 'https://script.google.com/macros/s/AKfycbxTeyZZIdIml2DRufK8jCDe1ZP8g4bsgVuiV4FhuTQ0jw-x-qF_25GcPttYYjxAlzWt_Q/exec';
+var ADMIN_WA = '5511971776347';
+var SK = 'obrafacil_prof';
+var prof = null;
+var timers = {};
+var carregado = {};
+
+// ── SESSAO ────────────────────────────────────────────────────
+function salvarSessao(p){ try{localStorage.setItem(SK,JSON.stringify(p));}catch(e){} }
+function lerSessao(){ try{var d=localStorage.getItem(SK);return d?JSON.parse(d):null;}catch(e){return null;} }
+function limparSessao(){ try{localStorage.removeItem(SK);}catch(e){} }
+
+// ── TOAST ─────────────────────────────────────────────────────
+function toast(msg,tipo){
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast show '+(tipo||'info');
+  clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove('show');},3500);
+}
+
+// ── MASK TEL ──────────────────────────────────────────────────
+function maskTel(input){
+  var v=input.value.replace(/\D/g,'').substring(0,11);
+  if(v.length>10) v=v.replace(/^(\d{2})(\d{5})(\d{4})$/,'($1) $2-$3');
+  else if(v.length>6) v=v.replace(/^(\d{2})(\d{4})(\d*)$/,'($1) $2-$3');
+  else if(v.length>2) v=v.replace(/^(\d{2})(\d*)$/,'($1) $2');
+  input.value=v;
+}
+
+function togglePw(id,btn){ var i=document.getElementById(id); i.type=i.type==='password'?'text':'password'; btn.textContent=i.type==='password'?'👁️':'🙈'; }
+
+function checkForca(input){
+  var v=input.value,s=0;
+  if(v.length>=6)s++; if(v.length>=10)s++; if(/[A-Z]/.test(v))s++; if(/[0-9]/.test(v))s++; if(/[^A-Za-z0-9]/.test(v))s++;
+  var fill=document.getElementById('forca-fill'),txt=document.getElementById('forca-txt');
+  var cor=s<=1?'#ff3d3d':s<=3?'#ffab00':'#00c853';
+  var lbl=s<=1?'Senha fraca':s<=3?'Senha media':'Senha forte';
+  fill.style.width=(s/5*100)+'%'; fill.style.background=cor;
+  txt.textContent=v?lbl:'Digite uma senha'; txt.style.color=v?cor:'var(--muted2)';
+}
+
+// ── ABAS LOGIN ────────────────────────────────────────────────
+function abaLogin(aba){
+  document.getElementById('form-entrar').style.display=aba==='entrar'?'block':'none';
+  document.getElementById('form-cadastro').style.display=aba==='cadastro'?'block':'none';
+  document.getElementById('tab-ent').classList.toggle('on',aba==='entrar');
+  document.getElementById('tab-cad').classList.toggle('on',aba==='cadastro');
+}
+
+// ── ENTRAR ────────────────────────────────────────────────────
+function entrar(){
+  var tel=document.getElementById('l-tel').value;
+  var senha=document.getElementById('l-senha').value;
+  var err=document.getElementById('err-login');
+  err.style.display='none';
+  if(tel.replace(/\D/g,'').length<10){err.textContent='Digite um WhatsApp valido.';err.style.display='block';return;}
+  if(!senha){err.textContent='Digite sua senha.';err.style.display='block';return;}
+  var btn=document.getElementById('btn-entrar');
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>Entrando...';
+  google.script.run
+    .withSuccessHandler(function(r){
+      btn.disabled=false; btn.innerHTML='ENTRAR';
+      if(!r.sucesso){
+        err.innerHTML=r.naoEncontrado
+          ? r.mensagem+'<br><br><button onclick="abaLogin(\'cadastro\')" style="background:var(--laranja);color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:13px;font-weight:600;margin-top:4px">Cadastrar agora</button>'
+          : r.mensagem;
+        err.style.display='block'; return;
+      }
+      prof=r.profissional; salvarSessao(prof); iniciarPainel();
+    })
+    .withFailureHandler(function(){
+      btn.disabled=false; btn.innerHTML='ENTRAR';
+      err.textContent='Erro de conexao. Tente novamente.'; err.style.display='block';
+    })
+    .loginProfissional(tel,senha);
+}
+
+// ── CADASTRAR ─────────────────────────────────────────────────
+function cadastrar(){
+  var nome=document.getElementById('c-nome').value.trim();
+  var tel=document.getElementById('c-tel').value.trim();
+  var profissao=document.getElementById('c-prof').value;
+  var cidade=document.getElementById('c-cidade').value.trim();
+  var senha=document.getElementById('c-senha').value;
+  var senha2=document.getElementById('c-senha2').value;
+  var obs=document.getElementById('c-obs').value.trim();
+  var err=document.getElementById('err-cad');
+  err.style.display='none'; document.getElementById('ok-cad').style.display='none';
+  if(!nome||nome.length<3){err.textContent='Nome muito curto.';err.style.display='block';return;}
+  if(tel.replace(/\D/g,'').length<10){err.textContent='WhatsApp invalido.';err.style.display='block';return;}
+  if(!profissao){err.textContent='Selecione sua profissao.';err.style.display='block';return;}
+  if(!cidade){err.textContent='Digite sua cidade.';err.style.display='block';return;}
+  if(senha.length<6){err.textContent='Senha muito curta (min. 6).';err.style.display='block';return;}
+  if(senha!==senha2){err.textContent='Senhas nao coincidem.';err.style.display='block';return;}
+  var btn=document.getElementById('btn-cad');
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>Enviando...';
+  google.script.run
+    .withSuccessHandler(function(r){
+      btn.disabled=false; btn.innerHTML='ENVIAR CADASTRO';
+      if(!r.sucesso){err.textContent=r.mensagem;err.style.display='block';return;}
+      var ok=document.getElementById('ok-cad');
+      ok.textContent='Cadastro enviado! Voce recebera uma mensagem no WhatsApp.';
+      ok.style.display='block';
+      if(r.aprovado){
+        setTimeout(function(){
+          prof={id:r.id,nome:nome,profissao:profissao,creditos:3,disponivel:true};
+          salvarSessao(prof); iniciarPainel();
+        },1500);
+      }
+    })
+    .withFailureHandler(function(){
+      btn.disabled=false; btn.innerHTML='ENVIAR CADASTRO';
+      err.textContent='Erro de conexao.'; err.style.display='block';
+    })
+    .solicitarCadastroProfissional({nome:nome,telefone:tel,profissao:profissao,cidade:cidade,senha:senha,observacoes:obs});
+}
+
+// ── PAINEL ────────────────────────────────────────────────────
+function iniciarPainel(){
+  document.getElementById('tela-login').style.display='none';
+  document.getElementById('app').style.display='flex';
+  document.getElementById('app').style.flexDirection='column';
+  document.getElementById('app').style.height='100vh';
+  atualizarHeaderUI();
+  carregarLeads();
+}
+
+function atualizarHeaderUI(){
+  if(!prof) return;
+  var nome=String(prof.nome||'').split(' ')[0];
+  document.getElementById('hd-nome').textContent='Ola, '+nome+'!';
+  document.getElementById('hd-prof').textContent=prof.profissao+' — '+prof.creditos+' creditos';
+  document.getElementById('hd-cred').textContent=prof.creditos;
+  var pill=document.getElementById('saldo-pill');
+  if(prof.creditos<=0) pill.classList.add('saldo-zero'); else pill.classList.remove('saldo-zero');
+  // Perfil
+  document.getElementById('perf-avatar').textContent=nome.charAt(0).toUpperCase();
+  document.getElementById('perf-nome').textContent=prof.nome||'--';
+  document.getElementById('perf-prof').textContent=prof.profissao||'--';
+  document.getElementById('ps-cred').textContent=prof.creditos;
+  document.getElementById('ps-disp').textContent=prof.disponivel?'Ativo':'Inativo';
+  // Aviso sem credito
+  document.getElementById('sem-cred').style.display=prof.creditos<=0?'block':'none';
+  document.getElementById('lista-leads').style.display=prof.creditos<=0?'none':'flex';
+}
+
+function atualizarCreditos(n){
+  prof.creditos=n; salvarSessao(prof); atualizarHeaderUI();
+}
+
+function irTab(id,btn){
+  document.querySelectorAll('.tela').forEach(function(t){t.classList.remove('ativa');});
+  document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('ativo');});
+  document.getElementById('tela-'+id).classList.add('ativa');
+  if(btn) btn.classList.add('ativo');
+  if(!carregado[id]){
+    carregado[id]=true;
+    if(id==='hist') carregarHist();
+    if(id==='perfil') carregarPerfil();
+  }
+}
+
+function sair(){
+  Object.values(timers).forEach(function(t){clearInterval(t);}); timers={};
+  prof=null; limparSessao();
+  document.getElementById('app').style.display='none';
+  document.getElementById('tela-login').style.display='flex';
+  carregado={};
+}
+
+// ── LEADS ─────────────────────────────────────────────────────
+function carregarLeads(){
+  if(!prof||prof.creditos<=0) return;
+  var el=document.getElementById('lista-leads');
+  el.innerHTML='<div class="ldg"><div class="big-spin"></div>Buscando leads...</div>';
+  google.script.run
+    .withSuccessHandler(function(r){
+      if(!r.sucesso){el.innerHTML='<div class="empty"><div class="empty-ico">⚠️</div>'+r.mensagem+'</div>';return;}
+      if(!r.leads||!r.leads.length){
+        el.innerHTML='<div class="empty"><div class="empty-ico">📭</div>Nenhum lead disponivel agora.<br>Novos aparecem aqui automaticamente.</div>';
+        return;
+      }
+      el.innerHTML=r.leads.map(renderLead).join('');
+      r.leads.forEach(function(l){if(l.deadline&&!l.jaDesbloqueado)iniciarTimer(l.id,l.deadline);});
+    })
+    .withFailureHandler(function(e){el.innerHTML='<div class="empty">Erro: '+e.message+'</div>';})
+    .getLeadsDisponiveis(prof.id);
+}
+
+function renderLead(lead){
+  var qtd=lead.qtdJaViram||0;
+  var vagas=Math.max(0,3-qtd);
+  if(lead.jaDesbloqueado&&lead.contato){
+    var c=lead.contato;
+    var tlimpo=(c.Telefone||'').replace(/\D/g,'');
+    var wpp='https://wa.me/55'+tlimpo+'?text='+encodeURIComponent('Ola '+c.Nome+'! Sou do ObraFacil. Vi sua solicitacao de '+lead.tipoObra+'. Posso te ajudar!');
+    return '<div class="lead-card desb">'+
+      '<div class="lead-top"><div class="lead-tipo">'+lead.tipoObra+'</div><div class="lead-badges"><span class="badge badge-desb">✅ Desbloqueado</span></div></div>'+
+      '<div class="lead-info"><span>📍 '+lead.cidade+'</span><span>📅 '+lead.data+'</span></div>'+
+      (lead.observacaoResumida?'<div class="lead-obs">'+lead.observacaoResumida+'</div>':'')+
+      '<div class="contato-box">'+
+      '<div class="contato-row"><span class="contato-lbl">Nome</span><span class="contato-val">'+(c.Nome||'--')+'</span></div>'+
+      '<div class="contato-row"><span class="contato-lbl">Tel</span><span class="contato-val"><a href="tel:'+(c.Telefone||'')+'" style="color:var(--green)">'+(c.Telefone||'--')+'</a></span></div>'+
+      '</div>'+
+      '<div class="lead-footer"><span class="lead-data">Contato desbloqueado</span>'+
+      '<a class="btn-wpp" href="'+wpp+'" target="_blank">📲 WhatsApp</a></div></div>';
+  }
+  if(lead.jaDesbloqueado){
+    return '<div class="lead-card desb">'+
+      '<div class="lead-top"><div class="lead-tipo">'+lead.tipoObra+'</div><div class="lead-badges"><span class="badge badge-desb">✅ Desbloqueado</span></div></div>'+
+      '<div class="lead-info"><span>📍 '+lead.cidade+'</span><span>📅 '+lead.data+'</span></div>'+
+      '<div class="lead-footer"><span class="lead-data">Ver contato no Historico</span>'+
+      '<button class="btn-desb" style="background:var(--green)" onclick="irTab(\'hist\',document.querySelectorAll(\'.nb\')[1])">Ver Historico</button></div></div>';
+  }
+  var vagCls=vagas===3?'vagas-0':vagas===1?'vagas-2':'vagas-1';
+  var vagTxt=vagas===3?'3 vagas':vagas===2?'2 vagas restantes':'ULTIMA VAGA!';
+  var timer=lead.deadline?'<span class="timer-pill" id="timer-'+lead.id+'">...</span>':'';
+  return '<div class="lead-card" id="card-'+lead.id+'">'+
+    '<div class="lead-top"><div class="lead-tipo">'+lead.tipoObra+'</div>'+
+    '<div class="lead-badges"><span class="badge badge-novo">Novo</span>'+
+    (qtd>=2?'<span class="badge badge-quente">🔥 Ultima vaga</span>':qtd===1?'<span class="badge badge-urg">⚡ 2 vagas</span>':'')+
+    '</div></div>'+
+    '<div class="lead-info"><span>📍 '+lead.cidade+'</span><span>📅 '+lead.data+'</span></div>'+
+    (lead.observacaoResumida?'<div class="lead-obs">'+lead.observacaoResumida+'</div>':'')+
+    '<div class="lead-footer">'+
+    '<div><div class="vagas-txt '+vagCls+'">'+vagTxt+'</div>'+timer+'</div>'+
+    '<button class="btn-desb" onclick="desbloquear(\''+lead.id+'\',this)">🔓 1 crédito</button>'+
+    '</div></div>';
+}
+
+function iniciarTimer(idLead,deadlineStr){
+  if(timers[idLead]) clearInterval(timers[idLead]);
+  var dl=new Date(deadlineStr).getTime();
+  function atualizar(){
+    var rest=dl-Date.now();
+    var el=document.getElementById('timer-'+idLead);
+    if(!el){clearInterval(timers[idLead]);return;}
+    if(rest<=0){clearInterval(timers[idLead]);var card=document.getElementById('card-'+idLead);if(card)card.style.display='none';return;}
+    var m=Math.floor(rest/60000),s=Math.floor((rest%60000)/1000);
+    el.textContent=m+'m '+String(s).padStart(2,'0')+'s';
+    if(rest<120000) el.classList.add('urg');
+  }
+  atualizar(); timers[idLead]=setInterval(atualizar,1000);
+}
+
+function desbloquear(idLead,btn){
+  if(!prof||prof.creditos<=0){toast('Sem creditos! Compre um pacote.','err');return;}
+  var orig=btn.innerHTML; btn.disabled=true; btn.innerHTML='<span class="spin"></span>';
+  google.script.run
+    .withSuccessHandler(function(r){
+      btn.disabled=false; btn.innerHTML=orig;
+      if(!r.sucesso){
+        if(r.semCredito){toast('Sem creditos!','err');}
+        else if(r.esgotado){
+          var card=document.getElementById('card-'+idLead);
+          if(card){card.innerHTML='<div style="padding:12px;text-align:center;color:var(--red);font-size:13px;font-weight:600">Lead esgotado — outro foi mais rapido.</div>';setTimeout(function(){if(card)card.style.display='none';},3000);}
+          toast('Lead esgotado!','err');
+        } else toast(r.mensagem,'err');
+        return;
+      }
+      toast(r.mensagem,'ok');
+      atualizarCreditos(r.creditosRestantes);
+      preencherContato(idLead,r.lead);
+      if(timers[idLead]){clearInterval(timers[idLead]);delete timers[idLead];}
+      carregado['hist']=false;
+    })
+    .withFailureHandler(function(e){btn.disabled=false;btn.innerHTML=orig;toast('Erro: '+e.message,'err');})
+    .desbloquearLead(prof.id,idLead);
+}
+
+function preencherContato(idLead,lead){
+  var card=document.getElementById('card-'+idLead);
+  if(!card) return;
+  var tlimpo=(lead.Telefone||'').replace(/\D/g,'');
+  var wpp='https://wa.me/55'+tlimpo+'?text='+encodeURIComponent('Ola '+lead.Nome+'! Sou do ObraFacil. Vi sua solicitacao de '+lead.Tipo_Obra+'. Posso te ajudar!');
+  card.classList.add('desb');
+  card.innerHTML='<div class="lead-top"><div class="lead-tipo">'+(lead.Tipo_Obra||'')+'</div><div class="lead-badges"><span class="badge badge-desb">✅ Desbloqueado</span></div></div>'+
+    '<div class="lead-info"><span>📍 '+(lead.Cidade||'')+'</span><span>📅 '+(lead.Data_Entrada||'')+'</span></div>'+
+    (lead.Observacoes?'<div class="lead-obs">'+lead.Observacoes+'</div>':'')+
+    '<div class="contato-box">'+
+    '<div class="contato-row"><span class="contato-lbl">Nome</span><span class="contato-val">'+(lead.Nome||'--')+'</span></div>'+
+    '<div class="contato-row"><span class="contato-lbl">Tel</span><span class="contato-val"><a href="tel:'+(lead.Telefone||'')+'" style="color:var(--green)">'+(lead.Telefone||'--')+'</a></span></div>'+
+    '</div>'+
+    '<div class="lead-footer"><span class="lead-data">Contato desbloqueado</span>'+
+    '<a class="btn-wpp" href="'+wpp+'" target="_blank">📲 WhatsApp</a></div>';
+}
+
+// ── HISTORICO ─────────────────────────────────────────────────
+function carregarHist(){
+  var el=document.getElementById('lista-hist');
+  el.innerHTML='<div class="ldg"><div class="big-spin"></div></div>';
+  google.script.run
+    .withSuccessHandler(function(r){
+      if(!r.sucesso||!r.historico.length){el.innerHTML='<div class="empty"><div class="empty-ico">📋</div>Nenhum lead desbloqueado ainda.</div>';return;}
+      el.innerHTML=r.historico.map(function(h){
+        return '<div class="hist-item"><div class="hi-info"><strong>'+h.tipoObra+' — '+h.cidade+'</strong><span>'+h.nome+'</span></div><div class="hi-data">'+h.data+'</div></div>';
+      }).join('');
+    })
+    .withFailureHandler(function(e){el.innerHTML='<div class="empty">Erro: '+e.message+'</div>';})
+    .getHistoricoDesb(prof.id);
+}
+
+// ── PERFIL ────────────────────────────────────────────────────
+function carregarPerfil(){
+  google.script.run
+    .withSuccessHandler(function(r){
+      if(!r.sucesso) return;
+      document.getElementById('ps-cred').textContent=r.creditos;
+      atualizarCreditos(r.creditos);
+    })
+    .getSaldoCreditos(prof.id);
+  google.script.run
+    .withSuccessHandler(function(r){
+      if(r.sucesso) document.getElementById('ps-desb').textContent=r.historico.length;
+    })
+    .getHistoricoDesb(prof.id);
+  document.getElementById('perf-info').innerHTML=
+    '<div>📛 '+prof.nome+'</div>'+
+    '<div>🔧 '+prof.profissao+'</div>';
+}
+
+// ── COMPRAR ───────────────────────────────────────────────────
+function selPacote(cred,val,el){
+  document.querySelectorAll('.pacote').forEach(function(p){p.classList.remove('sel');});
+  el.classList.add('sel');
+  var box=document.getElementById('pix-box');
+  document.getElementById('pix-det').textContent=cred+' creditos por R$ '+val;
+  var msg='Ola! Quero comprar '+cred+' creditos por R$ '+val+'. Meu ID: '+(prof?prof.id:'')+'. Segue comprovante:';
+  document.getElementById('pix-wpp').href='https://wa.me/'+ADMIN_WA+'?text='+encodeURIComponent(msg);
+  box.style.display='block';
+  box.scrollIntoView({behavior:'smooth'});
+}
+
+// ── MODAL ─────────────────────────────────────────────────────
+function fecharMod(){document.getElementById('modover').classList.remove('open');}
+
+// ── INIT ──────────────────────────────────────────────────────
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    document.getElementById('splash').classList.add('hide');
+    setTimeout(function(){document.getElementById('splash').style.display='none';},400);
+    var sessao=lerSessao();
+    if(sessao&&sessao.id){
+      prof=sessao;
+      google.script.run
+        .withSuccessHandler(function(r){if(r.sucesso){prof.creditos=r.creditos;salvarSessao(prof);}iniciarPainel();})
+        .withFailureHandler(function(){iniciarPainel();})
+        .getSaldoCreditos(sessao.id);
+    } else {
+      document.getElementById('tela-login').style.display='flex';
+    }
+  },2200);
+});
+</script>
+</body>
+</html>
