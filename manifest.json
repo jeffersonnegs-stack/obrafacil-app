@@ -2,7 +2,7 @@
   "name": "ObraFácil",
   "short_name": "ObraFácil",
   "description": "Gestão inteligente de obras e profissionais",
-  "start_url": "/profissional.html",
+  "start_url": "/app.html",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
