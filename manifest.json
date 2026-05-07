@@ -2,8 +2,8 @@
   "name": "ObraFácil",
   "short_name": "ObraFácil",
   "description": "Gestão inteligente de obras e profissionais",
-  "start_url": "/app.html",
-  "scope": "/",
+  "start_url": "https://jeffersonnegs-stack.github.io/obrafacil-app/app.html",
+  "scope": "https://jeffersonnegs-stack.github.io/obrafacil-app/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0b1f33",
@@ -21,18 +21,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Leads disponíveis",
-      "url": "/profissional.html",
-      "description": "Ver leads disponíveis"
-    },
-    {
-      "name": "Solicitar orçamento",
-      "url": "/index.html",
-      "description": "Formulário de orçamento"
     }
   ]
 }
