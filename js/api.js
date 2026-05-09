@@ -1,19 +1,17 @@
 // ============================================================
-// ObraFácil — api.js
-// Comunicação com o backend (Apps Script)
-// Correções aplicadas:
-//   ✅ Token de validação em todas as chamadas
-//   ✅ Tratamento robusto de erros (rede, JSON, quota)
-//   ✅ Detecção de offline
-//   ✅ Timeout de 30 segundos
-//   ✅ Sanitização de outputs (prevenção XSS)
+// ObraFácil — js/api.js
+// Camada de comunicação com o Google Apps Script
+//
+// Todas as chamadas ao backend passam por aqui.
+// O Apps Script recebe via doPost e roteia pela "acao".
 // ============================================================
 
 const Api = (() => {
 
-  // ── Sanitização contra XSS ────────────────────────────────
-  function san(str) {
-    return String(str == null ? '' : str)
+  // ── Sanitização básica contra XSS ────────────────────────
+  function san(valor) {
+    if (valor === null || valor === undefined) return '';
+    return String(valor)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
@@ -21,34 +19,17 @@ const Api = (() => {
       .replace(/'/g, '&#x27;');
   }
 
-  // ── Sanitiza objeto recursivamente ───────────────────────
-  function sanObj(obj) {
-    if (typeof obj !== 'object' || obj === null) return san(obj);
-    const result = {};
-    for (const key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        const val = obj[key];
-        result[key] = typeof val === 'object' ? sanObj(val) : san(val);
-      }
-    }
-    return result;
-  }
-
-  // ── Fetch com timeout ─────────────────────────────────────
-  function fetchComTimeout(url, opcoes, timeoutMs) {
-    return new Promise((resolve, reject) => {
-      const timer = setTimeout(() => reject(new Error('TIMEOUT')), timeoutMs);
-      fetch(url, opcoes)
-        .then(r => { clearTimeout(timer); resolve(r); })
-        .catch(e => { clearTimeout(timer); reject(e); });
-    });
-  }
-
-  // ── Chamada principal ─────────────────────────────────────
+  // ── Chamada principal ao backend ──────────────────────────
   async function chamar(acao, dados = {}) {
-    // Detecta offline antes de tentar
-    if (!navigator.onLine) {
-      return { sucesso: false, offline: true, mensagem: 'Sem conexão com a internet. Verifique sua rede.' };
+    const url = ObraFacil.SCRIPT_URL;
+
+    // Verifica se a URL foi configurada
+    if (!url || url.includes('COLE_AQUI')) {
+      console.error('[Api] SCRIPT_URL não configurada em js/config.js');
+      return {
+        sucesso: false,
+        mensagem: 'Backend não configurado. Configure a URL do Apps Script em js/config.js'
+      };
     }
 
     // Injeta token de segurança
@@ -58,44 +39,50 @@ const Api = (() => {
     };
 
     try {
-      const resp = await fetchComTimeout(
-        ObraFacil.BACKEND_URL,
-        {
-          method: 'POST',
-          body: JSON.stringify(payload),
-          headers: { 'Content-Type': 'text/plain' }
-        },
-        30000 // 30s timeout
-      );
+      const resp = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        redirect: 'follow',
+      });
 
       if (!resp.ok) {
-        return { sucesso: false, mensagem: `Servidor indisponível (${resp.status}). Tente novamente.` };
+        console.error('[Api] HTTP erro:', resp.status, resp.statusText);
+        return {
+          sucesso: false,
+          mensagem: 'Erro de comunicação (' + resp.status + '). Tente novamente.'
+        };
       }
 
       const texto = await resp.text();
 
-      // Verifica se é JSON válido
+      // Google às vezes redireciona e retorna HTML — detecta isso
+      if (texto.trim().startsWith('<!') || texto.trim().startsWith('<html')) {
+        console.error('[Api] Resposta HTML inesperada (possível redirecionamento OAuth)');
+        return {
+          sucesso: false,
+          mensagem: 'Erro de autenticação com o servidor. Verifique a implantação do Apps Script.'
+        };
+      }
+
       try {
-        const json = JSON.parse(texto);
-        // Sanitiza strings do resultado antes de usar no DOM
-        return sanObj(json);
-      } catch (_) {
-        console.error('[ObraFácil] Resposta inválida do servidor:', texto.substring(0, 300));
-        return { sucesso: false, mensagem: 'Erro interno no servidor. Tente novamente em instantes.' };
+        return JSON.parse(texto);
+      } catch (pe) {
+        console.error('[Api] JSON inválido:', texto.substring(0, 200));
+        return { sucesso: false, mensagem: 'Resposta inválida do servidor.' };
       }
 
     } catch (e) {
-      if (e.message === 'TIMEOUT') {
-        return { sucesso: false, mensagem: 'O servidor demorou muito para responder. Tente novamente.' };
-      }
+      console.error('[Api] Fetch error:', e.message);
+
+      // Distingue erro de rede de outros erros
       if (!navigator.onLine) {
-        return { sucesso: false, offline: true, mensagem: 'Conexão perdida. Verifique sua internet.' };
+        return { sucesso: false, mensagem: 'Sem conexão com a internet. Verifique sua rede.' };
       }
-      console.error('[ObraFácil] Erro de rede:', e.message);
       return { sucesso: false, mensagem: 'Erro de comunicação. Tente novamente.' };
     }
   }
 
-  // Expõe apenas o necessário
   return { chamar, san };
+
 })();
