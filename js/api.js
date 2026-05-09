@@ -24,7 +24,7 @@ const Api = (() => {
     const url = ObraFacil.SCRIPT_URL;
 
     // Verifica se a URL foi configurada
-    if (!url || url.includes('https://script.google.com/macros/s/AKfycbwvUvluA2sDbwXd-Dbik3j2TFGU0kbxPMxXfLJ0XS6du1gO3wQCkg8xZODMf9aZ3FF5HA/exec')) {
+    if (!url || url.includes('COLE_AQUI')) {
       console.error('[Api] SCRIPT_URL não configurada em js/config.js');
       return {
         sucesso: false,
