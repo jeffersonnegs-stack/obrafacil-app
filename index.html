@@ -1,27 +1,347 @@
-// ============================================================
-// ObraFácil — config.js
-// Configurações centralizadas do frontend
-// ============================================================
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1f33">
+  <meta name="description" content="ObraFácil — Conectando clientes a profissionais de obras em Itapetininga">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ObraFácil">
 
-const ObraFacil = {
-  // URL do backend (Apps Script)
-  BACKEND_URL: 'https://script.google.com/macros/s/AKfycbwvUvluA2sDbwXd-Dbik3j2TFGU0kbxPMxXfLJ0XS6du1gO3wQCkg8xZODMf9aZ3FF5HA/exec',
+  <!-- Open Graph (compartilhamento WhatsApp/redes) -->
+  <meta property="og:title" content="ObraFácil">
+  <meta property="og:description" content="Encontre profissionais de obras ou acesse novos clientes.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jeffersonnegs-stack.github.io/obrafacil-app/">
 
-  // Token de validação (deve bater com APP_TOKEN no Apps Script)
-  APP_TOKEN: 'of_prod_2026_k9x',
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
 
-  // WhatsApp admin
-  WA_ADMIN: '5511971776347',
+  <title>ObraFácil</title>
+</head>
+<body>
 
-  // Sessão expira em 30 dias (ms)
-  SESSION_TTL: 30 * 24 * 60 * 60 * 1000,
+<!-- ── Banner offline ──────────────────────────────────────── -->
+<div id="banner-offline">
+  📵 Sem conexão com a internet
+</div>
 
-  // Chave do localStorage
-  SESSION_KEY: 'obrafacil_sessao_v2',
+<!-- ── Loading inicial ─────────────────────────────────────── -->
+<div id="loading-inicial">
+  <div class="logo-load">ObraFácil</div>
+  <div class="sub-load">Gestão Inteligente</div>
+  <div class="spinner-load"></div>
+</div>
 
-  // Versão do cache PWA — mude aqui a cada deploy
-  CACHE_VERSION: '2026-05-07-v1',
-};
+<!-- ══════════════════════════════════════════════════════════
+     TELA 1 — SELEÇÃO
+══════════════════════════════════════════════════════════ -->
+<div id="tela-selecao">
+  <div class="sel-logo">ObraFácil</div>
+  <div class="sel-slogan">Gestão Inteligente</div>
+  <p class="sel-pergunta">Como podemos te ajudar hoje?</p>
+  <div class="sel-cards">
+    <div class="sel-card" onclick="App.irParaCliente()" role="button" tabindex="0">
+      <span class="sel-icone">🏠</span>
+      <div class="sel-titulo">Preciso de uma obra</div>
+      <div class="sel-desc">Solicite orçamento e encontre o profissional certo</div>
+    </div>
+    <div class="sel-card" onclick="App.irParaProfissional()" role="button" tabindex="0">
+      <span class="sel-icone">🔨</span>
+      <div class="sel-titulo">Sou Profissional</div>
+      <div class="sel-desc">Acesse leads e encontre novos clientes</div>
+    </div>
+  </div>
+  <div class="sel-rodape">ObraFácil • Itapetininga • SP</div>
+</div>
 
-// Congela o objeto para evitar modificação acidental
-Object.freeze(ObraFacil);
+<!-- ══════════════════════════════════════════════════════════
+     TELA 2 — FORMULÁRIO CLIENTE
+══════════════════════════════════════════════════════════ -->
+<div id="tela-cliente">
+  <div class="card-form">
+    <button class="btn-voltar" onclick="App.voltarSelecao()">← Voltar</button>
+    <div class="card-logo">ObraFácil</div>
+    <div class="card-slogan">Solicite seu orçamento</div>
+    <div class="destaque-material">
+      Somos uma central de obras que conecta você ao profissional certo.
+      Para garantir seu atendimento, precisamos saber se você compraria o material da obra conosco.
+    </div>
+    <form id="form-lead" novalidate>
+      <input type="hidden" name="origem" id="campo-origem" value="App">
+      <div class="form-group">
+        <label for="cli-nome">Seu Nome *</label>
+        <input id="cli-nome" name="nome" type="text" required placeholder="João Silva" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label for="cli-tel">WhatsApp *</label>
+        <input id="cli-tel" name="telefone" type="tel" required placeholder="(15) 99999-9999"
+          oninput="UI.mascaraTel(this)" maxlength="15" autocomplete="tel">
+      </div>
+      <div class="form-group">
+        <label for="cli-cidade">Cidade</label>
+        <input id="cli-cidade" name="cidade" type="text" placeholder="Itapetininga" autocomplete="address-level2">
+      </div>
+      <div class="form-group">
+        <label for="cli-obra">Tipo de Obra *</label>
+        <select id="cli-obra" name="tipoObra" required>
+          <option value="">O que você precisa?</option>
+          <option value="Construção">Construção</option>
+          <option value="Pintura">Pintura</option>
+          <option value="Elétrica">Elétrica</option>
+          <option value="Hidráulica">Hidráulica</option>
+          <option value="Paisagismo">Paisagismo</option>
+          <option value="Reforma">Reforma</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="cli-obs">Conte mais sobre o projeto</label>
+        <textarea id="cli-obs" name="observacoes" placeholder="Descreva brevemente o que você precisa..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Você compraria o material da obra conosco? *</label>
+        <div class="opcoes-material">
+          <div class="opcao-btn" id="btn-material-sim" onclick="App.selecionarMaterial('Sim')" role="button" tabindex="0">
+            <span class="icone">✅</span>
+            <span class="rotulo">Sim, topo!</span>
+            <span class="desc">Quero material + profissional</span>
+          </div>
+          <div class="opcao-btn" id="btn-material-nao" onclick="App.selecionarMaterial('Nao')" role="button" tabindex="0">
+            <span class="icone">❌</span>
+            <span class="rotulo">Não, obrigado</span>
+            <span class="desc">Apenas indicação</span>
+          </div>
+        </div>
+        <input type="hidden" name="compromisoMaterial" id="campo-material" value="">
+      </div>
+      <button type="submit" id="btn-enviar-lead" class="btn-primario">Enviar Solicitação</button>
+    </form>
+    <div id="msg-cliente" class="msg-form"></div>
+    <p class="rodape-form">Entraremos em contato em até 10 minutos</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     TELA 3 — LOGIN / CADASTRO PROFISSIONAL
+══════════════════════════════════════════════════════════ -->
+<div id="tela-prof">
+  <div class="login-card" id="card-auth">
+    <button class="btn-voltar" onclick="App.voltarSelecao()">← Voltar</button>
+    <div class="logo-prof">ObraFácil</div>
+    <div class="logo-sub">Área do Profissional</div>
+    <div class="auth-tabs">
+      <button class="auth-tab on" id="tab-login-btn" onclick="App.mostrarAba('login')">Entrar</button>
+      <button class="auth-tab" id="tab-cad-btn" onclick="App.mostrarAba('cadastro')">Quero me cadastrar</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="form-login">
+      <label class="login-label" for="inp-tel">Número de WhatsApp</label>
+      <input class="login-input" type="tel" id="inp-tel"
+        placeholder="(15) 99999-9999" oninput="UI.mascaraTel(this)"
+        onkeydown="if(event.key==='Enter') document.getElementById('inp-senha').focus()"
+        autocomplete="tel">
+
+      <label class="login-label" for="inp-senha">Senha</label>
+      <div class="input-wrap">
+        <input class="login-input" type="password" id="inp-senha"
+          placeholder="Digite sua senha"
+          onkeydown="if(event.key==='Enter') App.entrar()"
+          autocomplete="current-password">
+        <button class="toggle-senha" onclick="UI.toggleSenha('inp-senha','btn-eye')" type="button" id="btn-eye" aria-label="Mostrar senha">👁️</button>
+      </div>
+
+      <button class="btn-primario" id="btn-entrar" onclick="App.entrar()">Entrar</button>
+      <div class="erro-box" id="login-erro" role="alert"></div>
+    </div>
+
+    <!-- CADASTRO -->
+    <div id="form-cadastro" style="display:none">
+      <div class="form-row">
+        <div>
+          <label class="login-label" for="cad-nome">Nome completo *</label>
+          <input class="login-input" type="text" id="cad-nome" placeholder="João da Silva" style="margin-bottom:0" autocomplete="name">
+        </div>
+        <div>
+          <label class="login-label" for="cad-tel">WhatsApp *</label>
+          <input class="login-input" type="tel" id="cad-tel" placeholder="(15) 99999-9999"
+            oninput="UI.mascaraTel(this)" style="margin-bottom:0" autocomplete="tel">
+        </div>
+      </div>
+      <div style="margin-top:10px"></div>
+      <div class="form-row">
+        <div>
+          <label class="login-label" for="cad-prof">Profissão *</label>
+          <select class="select-input" id="cad-prof" style="margin-bottom:0">
+            <option value="">Selecione...</option>
+            <option>Pedreiro</option>
+            <option>Pintor</option>
+            <option>Eletricista</option>
+            <option>Encanador</option>
+            <option>Paisagista</option>
+          </select>
+        </div>
+        <div>
+          <label class="login-label" for="cad-cidade">Cidade *</label>
+          <input class="login-input" type="text" id="cad-cidade" placeholder="Itapetininga" style="margin-bottom:0" autocomplete="address-level2">
+        </div>
+      </div>
+      <div style="margin-top:10px"></div>
+      <label class="login-label" for="cad-senha">Criar senha *</label>
+      <div class="input-wrap">
+        <input class="login-input" type="password" id="cad-senha"
+          placeholder="Mínimo 6 caracteres"
+          oninput="UI.forcaSenha(this)" style="margin-bottom:0"
+          autocomplete="new-password">
+        <button class="toggle-senha" onclick="UI.toggleSenha('cad-senha','btn-eye-cad')" type="button" id="btn-eye-cad" aria-label="Mostrar senha">👁️</button>
+      </div>
+      <div class="forca-bar"><div class="forca-fill" id="forca-fill" style="width:0%"></div></div>
+      <div class="forca-texto" id="forca-texto">Digite uma senha</div>
+      <label class="login-label" for="cad-senha2">Confirmar senha *</label>
+      <input class="login-input" type="password" id="cad-senha2" placeholder="Repita a senha"
+        onkeydown="if(event.key==='Enter') App.cadastrar()" autocomplete="new-password">
+      <label class="login-label" style="margin-top:4px" for="cad-obs">Observações (opcional)</label>
+      <input class="login-input" type="text" id="cad-obs" placeholder="Anos de experiência, especialidade...">
+      <button class="btn-primario" id="btn-cadastrar" onclick="App.cadastrar()">Enviar cadastro</button>
+      <div class="erro-box" id="cad-erro" role="alert"></div>
+      <div class="ok-box"   id="cad-ok"   role="status"></div>
+    </div>
+
+    <div class="login-rodape">
+      Dúvidas? Fale conosco:<br>
+      <a class="wpp-link" href="https://wa.me/5511971776347?text=Ola!+Quero+me+cadastrar+no+ObraFacil" target="_blank" rel="noopener">
+        📲 WhatsApp ObraFácil
+      </a>
+    </div>
+  </div>
+
+  <!-- Pós-cadastro -->
+  <div class="pendente-card" id="card-pendente">
+    <div class="pendente-icon" id="pendente-icon">✅</div>
+    <div class="pendente-titulo" id="pendente-titulo">Cadastro Ativo!</div>
+    <div id="pendente-msg" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1.5px solid #86efac;border-radius:14px;padding:18px 20px;margin-bottom:18px;font-size:13px;color:#14532d;line-height:1.85;text-align:left;"></div>
+    <div id="pendente-acesso" style="background:#fff7ed;border:1.5px solid #fed7aa;border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:13px;color:#92400e;line-height:1.8;text-align:left;display:none;"></div>
+    <a class="wpp-link" id="wpp-pendente" href="#" target="_blank" rel="noopener"
+       style="background:#16a34a;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;color:#fff;text-decoration:none;font-family:'Syne',sans-serif;margin-bottom:10px;">
+      📲 Falar com a equipe ObraFácil
+    </a>
+    <button class="btn-secundario" onclick="App.mostrarAba('login')">Fazer login com minha senha</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAINEL DO PROFISSIONAL
+══════════════════════════════════════════════════════════ -->
+<div class="painel" id="painel">
+  <header class="header">
+    <div class="header-logo">ObraFácil</div>
+    <div class="header-info">
+      <div class="saldo-pill" id="saldo-pill">
+        <span class="saldo-num" id="hd-creditos">0</span> créditos
+      </div>
+      <button class="btn-sair" onclick="App.sair()">Sair</button>
+    </div>
+  </header>
+  <div class="boas-vindas">
+    <div class="bv-nome" id="bv-nome">Olá!</div>
+    <div class="bv-prof" id="bv-prof"></div>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button class="tab-btn on" onclick="App.irTab(0)" role="tab">Leads disponíveis</button>
+    <button class="tab-btn"   onclick="App.irTab(1)" role="tab">Comprar créditos</button>
+    <button class="tab-btn"   onclick="App.irTab(2)" role="tab">Histórico</button>
+  </nav>
+  <main class="conteudo">
+
+    <!-- Tab Leads -->
+    <div id="tab-leads" role="tabpanel">
+      <div id="aviso-sem-credito" class="aviso-sem-credito" style="display:none">
+        <h3>Seus créditos acabaram!</h3>
+        <p>Você precisa de créditos para visualizar e desbloquear novos leads.<br>Compre um pacote e continue recebendo clientes.</p>
+        <button class="btn-primario" style="max-width:280px;margin:0 auto" onclick="App.irTab(1)">Comprar créditos agora</button>
+      </div>
+      <div id="lista-leads">
+        <div class="vazio"><div class="vazio-titulo">Carregando leads...</div></div>
+      </div>
+    </div>
+
+    <!-- Tab Comprar -->
+    <div id="tab-comprar" style="display:none" role="tabpanel">
+      <div style="margin-bottom:16px;">
+        <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--azul);margin-bottom:4px">Comprar créditos</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6">Cada crédito desbloqueia o contato completo de 1 cliente.</div>
+      </div>
+      <div class="pacotes-grid">
+        <div class="pacote" onclick="App.selecionarPacote(5,75,this)">
+          <div class="pacote-tag" style="color:var(--muted)">Iniciante</div>
+          <div class="pacote-cred">5</div><div class="pacote-sub">créditos</div>
+          <div class="pacote-preco">R$ 75</div><div class="pacote-unit">R$ 15,00/contato</div>
+        </div>
+        <div class="pacote popular" onclick="App.selecionarPacote(12,150,this)">
+          <div class="pacote-tag" style="color:var(--laranja)">Mais popular</div>
+          <div class="pacote-cred">12</div><div class="pacote-sub">créditos</div>
+          <div class="pacote-preco">R$ 150</div><div class="pacote-unit">R$ 12,50/contato</div>
+        </div>
+        <div class="pacote" onclick="App.selecionarPacote(25,250,this)">
+          <div class="pacote-tag" style="color:var(--verde)">Profissional</div>
+          <div class="pacote-cred">25</div><div class="pacote-sub">créditos</div>
+          <div class="pacote-preco">R$ 250</div><div class="pacote-unit">R$ 10,00/contato</div>
+        </div>
+      </div>
+      <div class="pix-box" id="pix-box" style="display:none">
+        <div class="pix-titulo">Pacote selecionado — pague via Pix</div>
+        <div id="pix-detalhe" style="font-size:13px;color:var(--muted);margin-bottom:10px;"></div>
+        <div class="pix-num">Chave Pix: 11971776347</div>
+        <div class="pix-desc">Envie o comprovante para o WhatsApp do ObraFácil.<br>Seus créditos serão adicionados em até 30 minutos.</div>
+        <div style="margin-top:14px;"><a id="pix-wpp" href="#" target="_blank" rel="noopener" class="btn-whatsapp">Enviar comprovante</a></div>
+      </div>
+      <div style="margin-top:20px;padding:14px;background:var(--bg);border-radius:var(--radius);font-size:12px;color:var(--muted);line-height:1.7">
+        <strong style="color:var(--texto)">Por que vale a pena?</strong><br>
+        Uma reforma típica vale R$ 2.000 a R$ 8.000. Um crédito custa R$ 10 a R$ 15.
+        Você investe menos de 1% do valor da obra para receber o contato do cliente.
+      </div>
+    </div>
+
+    <!-- Tab Histórico -->
+    <div id="tab-historico" style="display:none" role="tabpanel">
+      <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--azul);margin-bottom:16px">Leads desbloqueados</div>
+      <div id="lista-historico">
+        <div class="vazio">
+          <div class="vazio-titulo">Nenhum lead desbloqueado ainda</div>
+          <div class="vazio-desc">Quando você desbloquear um lead, ele aparecerá aqui.</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Modal sem créditos -->
+<div class="overlay" id="modal-sem-cred" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-icon">💳</div>
+    <div class="modal-titulo">Créditos insuficientes</div>
+    <div class="modal-desc">Você não tem créditos para desbloquear este lead. Compre um pacote e acesse os dados do cliente agora.</div>
+    <div class="modal-btns">
+      <button class="btn-primario" onclick="App.irTab(1);UI.fecharModal()" style="margin-top:0">Ver pacotes de crédito</button>
+      <button class="btn-secundario" onclick="UI.fecharModal()">Agora não</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- Scripts — ordem importa -->
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
