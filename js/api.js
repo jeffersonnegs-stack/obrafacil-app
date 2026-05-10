@@ -1,3 +1,11 @@
+bash
+
+cat /mnt/user-data/uploads/codigo.analise | head -80
+Saída
+
+api.js
+
+
 // ============================================================
 // ObraFácil — js/api.js
 // Camada de comunicação com o Google Apps Script
@@ -74,15 +82,3 @@ const Api = (() => {
 
     } catch (e) {
       console.error('[Api] Fetch error:', e.message);
-
-      // Distingue erro de rede de outros erros
-      if (!navigator.onLine) {
-        return { sucesso: false, mensagem: 'Sem conexão com a internet. Verifique sua rede.' };
-      }
-      return { sucesso: false, mensagem: 'Erro de comunicação. Tente novamente.' };
-    }
-  }
-
-  return { chamar, san };
-
-})();
